@@ -136,10 +136,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="glad.c" />
     <ClCompile Include="MainFrame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="dependencies\include\glad\glad.h" />
+    <ClInclude Include="dependencies\include\KHR\khrplatform.h" />
     <ClInclude Include="MainFrame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

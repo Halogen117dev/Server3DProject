@@ -1,6 +1,8 @@
 #include "MainFrame.h"
 #include<wx/wx.h>
 #include<wx/spinctrl.h>
+
+#include<glad/glad.h>
 #include<wx/glcanvas.h>
 
 
