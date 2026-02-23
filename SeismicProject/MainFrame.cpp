@@ -1,15 +1,30 @@
 #include "MainFrame.h"
 #include<wx/wx.h>
-#include<wx/spinctrl.h>
-
-#include<glad/glad.h>
-#include<wx/glcanvas.h>
 
 
 MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 {
 	CreateControls();
 	SetupSizers();
+
+	MyGraphicsCanvas = NULL;
+	wxGLAttributes vAttrs;
+	vAttrs.PlatformDefaults().Defaults().EndList();
+
+	bool accepted = wxGLCanvas::IsDisplaySupported(vAttrs);
+	if (accepted)
+	{
+		wxMessageDialog dialog(this, "Successfully initializing OpenGL", "All is well", wxOK);
+		dialog.ShowModal();
+	}
+	else
+	{
+		wxMessageDialog dialog(this, "WE'RE COOKED BRO", "Bad", wxOK);
+		dialog.ShowModal();
+	}
+
+	MyGraphicsCanvas = new GraphicsCanvas(this, vAttrs);
+	
 }
 
 void MainFrame::CreateControls()
@@ -41,4 +56,29 @@ void MainFrame::SetupSizers()
 	
 	MainPanel->SetSizer(mainSizer);
 	mainSizer->SetSizeHints(this);
+}
+
+
+GraphicsCanvas::GraphicsCanvas(MainFrame* parent, const wxGLAttributes& canvasAttrs)
+	:wxGLCanvas(parent, canvasAttrs)
+{
+	parentFrame = parent;
+	oglContext = NULL;
+	m_winHeight = 0; // We have not been sized yet
+
+	wxGLContextAttrs contextAttribs;
+
+	contextAttribs.PlatformDefaults().OGLVersion(4, 6).EndList();
+	oglContext = new wxGLContext(this, nullptr, &contextAttribs);
+
+	if (oglContext->IsOK())
+	{
+		wxMessageDialog dialog(parentFrame, "Bro this OGL context is working as intended!", "All is well", wxOK);
+		dialog.ShowModal();
+	}
+	else
+	{
+		wxMessageDialog dialog(parentFrame, "Bro this OGL context is ASS LOL", "All is well", wxOK);
+		dialog.ShowModal();
+	}
 }
