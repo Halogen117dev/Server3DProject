@@ -3,6 +3,12 @@
 #include<wx/wx.h>
 #include<glad/glad.h> //must be included before glCanvas.h
 #include<wx/glcanvas.h>
+#include<math.h>
+
+//networking
+
+float r  = 0.0f, g = 0.0f, b = 0.0f;
+
 
 class OpenGLCanvas;
 
@@ -25,6 +31,7 @@ public:
     bool InitOpenGL();
 
     void OnPaint(wxPaintEvent& event);
+    void OnIdle(wxIdleEvent& event);
     void OnSize(wxSizeEvent& event);
 
 private:
@@ -90,6 +97,7 @@ OpenGLCanvas::OpenGLCanvas(MyFrame* parent, const wxGLAttributes& canvasAttrs)
     }
 
     Bind(wxEVT_PAINT, &OpenGLCanvas::OnPaint, this);
+    Bind(wxEVT_IDLE, &OpenGLCanvas::OnIdle, this);
     Bind(wxEVT_SIZE, &OpenGLCanvas::OnSize, this);
 }
 
@@ -228,7 +236,7 @@ void OpenGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 
     SetCurrent(*openGLContext);
 
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(r, g, b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(ShaderProgram);
@@ -236,6 +244,15 @@ void OpenGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
     SwapBuffers();
+}
+
+void OpenGLCanvas::OnIdle(wxIdleEvent& event)
+{
+    Refresh();
+    r += 0.0001;
+    r = std::fmod(r, 1.0f);
+
+    event.Skip();
 }
 
 void OpenGLCanvas::OnSize(wxSizeEvent& event)
