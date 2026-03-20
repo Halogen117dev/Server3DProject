@@ -16,9 +16,11 @@ public:
 private:
 	CURL* MyCurl = NULL;
 	ServerState MyServerState;
-	Timer CurlTimer;
+	//Timer CurlTimer;
 
 public:
+	Timer CurlTimer;
+	
 	ServerState RequestServerState();
 	int ElapsedTimeSinceRequest = 0;
 };

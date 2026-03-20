@@ -32,7 +32,7 @@ struct Health
 
 CurlHandler::ServerState CurlHandler::RequestServerState()
 {
-	if (ElapsedTimeSinceRequest > 500)
+	if (ElapsedTimeSinceRequest > 1000000) //in microseconds
 	{
 		//curl_easy_setopt(MyCurl, CURLOPT_URL, "http://127.0.0.1:5000/api/v1/health");
 

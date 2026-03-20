@@ -8,8 +8,11 @@ public:
 	int DT();
 
 private:
-	std::chrono::steady_clock::time_point PresentTime;
-	std::chrono::steady_clock::time_point PreviousTime;
+	std::chrono::high_resolution_clock::time_point PresentTime;
+	std::chrono::high_resolution_clock::time_point PreviousTime;
 	int DeltaTime = 0;
+
+public:
+	int DebugGetDT();
 };
 

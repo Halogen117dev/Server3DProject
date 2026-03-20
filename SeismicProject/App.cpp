@@ -8,6 +8,7 @@
 //networking
 #include"CurlHandler.h"
 #include"Timer.h"
+#include<sstream>
 
 float r  = 0.0f, g = 0.0f, b = 0.0f;
 
@@ -245,27 +246,43 @@ void OpenGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     
     SetCurrent(*openGLContext);
 
-    /*if (ParentCurlHandler)
+    if (ParentCurlHandler)
     {
         CurlHandler::ServerState serverState = ParentCurlHandler->RequestServerState();
 
-        if (serverState.IsUp)
+        if (serverState.UnknownStatus)
         {
             r = 0.0f;
-            g = 1.0f;
-            b = 0.0f;
-        }
-        else if (!serverState.IsUp)
-        {
-            r = 1.0f;
             g = 0.0f;
-            b = 0.0f;
+            b = 1.0f;
         }
+        else
+        {
+            if (serverState.IsUp)
+            {
+                r = 0.0f;
+                g = 1.0f;
+                b = 0.0f;
+            }
+            else if (!serverState.IsUp)
+            {
+                r = 1.0f;
+                g = 0.0f;
+                b = 0.0f;
+            }
+        }        
     }
     else
     {
-        b = 1.0f;
-    }*/
+        r = 0.0f;
+        g = 0.0f;
+        b = 0.0f;
+    }
+
+    /*std::stringstream sstream;
+    sstream << ParentCurlHandler->ElapsedTimeSinceRequest << "   " << ParentCurlHandler->CurlTimer.DebugGetDT();
+    wxLogLastError(sstream.str());*/
+    
 
     glClearColor(r, g, b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -280,6 +297,8 @@ void OpenGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 void OpenGLCanvas::OnIdle(wxIdleEvent& event)
 {
     Refresh();
+    /*r += 0.0001;
+    r = std::fmod(r, 1.0f);*/
 
     event.Skip();
 }
