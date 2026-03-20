@@ -6,6 +6,7 @@
 #include<math.h>
 
 //networking
+#include"CurlHandler.h"
 
 float r  = 0.0f, g = 0.0f, b = 0.0f;
 
@@ -16,7 +17,7 @@ class MyFrame : public wxFrame
 {
 public:
     MyFrame(const wxString& title);
-
+    CurlHandler* MyCurlHandler;
 private:
     OpenGLCanvas* openGLCanvas{ nullptr };
 };
@@ -34,6 +35,7 @@ public:
     void OnIdle(wxIdleEvent& event);
     void OnSize(wxSizeEvent& event);
 
+    CurlHandler* ParentCurlHandler;
 private:
     wxGLContext* openGLContext;
     bool IsOpenGLInitialized{false};
@@ -69,6 +71,8 @@ bool App::OnInit()
 MyFrame::MyFrame(const wxString& title)
     : wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxDefaultSize)
 {
+    MyCurlHandler = new CurlHandler("http://127.0.0.1:5000/api/v1/health");
+
     wxGLAttributes vAttrs;
     vAttrs.PlatformDefaults().Defaults().EndList();
 
@@ -77,11 +81,15 @@ MyFrame::MyFrame(const wxString& title)
         openGLCanvas = new OpenGLCanvas(this, vAttrs);
         openGLCanvas->SetMinSize(wxSize(640, 800));
     }
+
+    //MyCurlHandler = new CurlHandler("http://127.0.0.1:5000/api/v1/health");
 }
 
 OpenGLCanvas::OpenGLCanvas(MyFrame* parent, const wxGLAttributes& canvasAttrs)
     : wxGLCanvas(parent, canvasAttrs)
 {
+    ParentCurlHandler = parent->MyCurlHandler;
+
     wxGLContextAttrs ctxAttrs;
     ctxAttrs.PlatformDefaults().CoreProfile().OGLVersion(4, 6).EndList();
     openGLContext = new wxGLContext(this, nullptr, &ctxAttrs);
@@ -233,8 +241,30 @@ bool OpenGLCanvas::InitOpenGL()
 void OpenGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 {
     wxPaintDC dc(this);
-
+    
     SetCurrent(*openGLContext);
+
+    if (ParentCurlHandler)
+    {
+        ParentCurlHandler->RequestHealth();
+
+        if (ParentCurlHandler->IsUp)
+        {
+            r = 0.0f;
+            g = 1.0f;
+            b = 0.0f;
+        }
+        else if (!ParentCurlHandler->IsUp)
+        {
+            r = 1.0f;
+            g = 0.0f;
+            b = 0.0f;
+        }
+    }
+    else
+    {
+        b = 1.0f;
+    }
 
     glClearColor(r, g, b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -249,8 +279,6 @@ void OpenGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 void OpenGLCanvas::OnIdle(wxIdleEvent& event)
 {
     Refresh();
-    r += 0.0001;
-    r = std::fmod(r, 1.0f);
 
     event.Skip();
 }
