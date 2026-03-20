@@ -19,6 +19,7 @@ class MyFrame : public wxFrame
 {
 public:
     MyFrame(const wxString& title);
+    ~MyFrame();
     CurlHandler* MyCurlHandler;
 private:
     OpenGLCanvas* openGLCanvas{ nullptr };
@@ -48,6 +49,7 @@ private:
 
 wxIMPLEMENT_APP(App);
 
+
 //bool App::OnInit()
 //{
 //    MainFrame* mainFrame = new MainFrame("C++ GUI");
@@ -59,16 +61,24 @@ wxIMPLEMENT_APP(App);
 //    return true;
 //}
 
+MyFrame* frame;
+
 bool App::OnInit()
 {
     if (!wxApp::OnInit())
         return false;
 
-    MyFrame* frame = new MyFrame("Hello OpenGL");
+    frame = new MyFrame("Hello OpenGL");
     frame->Show(true);
 
     return true;
 }
+int App::OnExit()
+{
+    return 1;
+}
+
+
 
 MyFrame::MyFrame(const wxString& title)
     : wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxDefaultSize)
@@ -85,6 +95,12 @@ MyFrame::MyFrame(const wxString& title)
     }
 
     //MyCurlHandler = new CurlHandler("http://127.0.0.1:5000/api/v1/health");
+}
+
+MyFrame::~MyFrame()
+{
+    delete MyCurlHandler;
+    delete openGLCanvas;
 }
 
 OpenGLCanvas::OpenGLCanvas(MyFrame* parent, const wxGLAttributes& canvasAttrs)
@@ -113,6 +129,7 @@ OpenGLCanvas::OpenGLCanvas(MyFrame* parent, const wxGLAttributes& canvasAttrs)
 
 OpenGLCanvas::~OpenGLCanvas()
 {
+
     delete openGLContext;
 }
 
@@ -244,7 +261,12 @@ void OpenGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 {
     wxPaintDC dc(this);
     
-    SetCurrent(*openGLContext);
+    bool firstAppearance = IsShownOnScreen() && !IsOpenGLInitialized;
+
+    if (firstAppearance)
+    {
+        SetCurrent(*openGLContext);
+    }
 
     if (ParentCurlHandler)
     {

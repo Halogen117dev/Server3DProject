@@ -7,6 +7,8 @@ class CurlHandler
 {
 public:
 	CurlHandler(const char* CurlURL);
+	~CurlHandler();
+
 	struct ServerState
 	{
 		bool IsUp = false;

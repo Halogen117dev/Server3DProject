@@ -14,6 +14,11 @@ CurlHandler::CurlHandler(const char* CurlURL)
 	curl_easy_setopt(MyCurl, CURLOPT_URL, CurlURL);
 }
 
+CurlHandler::~CurlHandler()
+{
+	delete MyCurl;
+}
+
 
 
 // Callback function to handle the data returned by the server
