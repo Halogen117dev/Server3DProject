@@ -7,6 +7,7 @@
 
 //networking
 #include"CurlHandler.h"
+#include"Timer.h"
 
 float r  = 0.0f, g = 0.0f, b = 0.0f;
 
@@ -244,17 +245,17 @@ void OpenGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     
     SetCurrent(*openGLContext);
 
-    if (ParentCurlHandler)
+    /*if (ParentCurlHandler)
     {
-        ParentCurlHandler->RequestHealth();
+        CurlHandler::ServerState serverState = ParentCurlHandler->RequestServerState();
 
-        if (ParentCurlHandler->IsUp)
+        if (serverState.IsUp)
         {
             r = 0.0f;
             g = 1.0f;
             b = 0.0f;
         }
-        else if (!ParentCurlHandler->IsUp)
+        else if (!serverState.IsUp)
         {
             r = 1.0f;
             g = 0.0f;
@@ -264,7 +265,7 @@ void OpenGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     else
     {
         b = 1.0f;
-    }
+    }*/
 
     glClearColor(r, g, b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
