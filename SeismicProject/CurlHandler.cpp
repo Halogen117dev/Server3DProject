@@ -16,7 +16,8 @@ CurlHandler::CurlHandler(const char* CurlURL)
 
 CurlHandler::~CurlHandler()
 {
-	delete MyCurl;
+	curl_easy_cleanup(MyCurl);
+	//delete MyCurl;
 }
 
 
