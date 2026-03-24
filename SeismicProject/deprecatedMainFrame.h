@@ -5,10 +5,10 @@
 
 class GraphicsCanvas;
 
-class MainFrame: public wxFrame
+class deprecatedMainFrame: public wxFrame
 {
 public:
-	MainFrame(const wxString& title);
+	deprecatedMainFrame(const wxString& title);
 	void CreateControls();
 	void SetupSizers();
 
@@ -25,7 +25,7 @@ private:
 class GraphicsCanvas : public wxGLCanvas
 {
 public:
-	GraphicsCanvas(MainFrame* parent, const wxGLAttributes& canvasAttrs);
+	GraphicsCanvas(deprecatedMainFrame* parent, const wxGLAttributes& canvasAttrs);
 	//~GraphicsCanvas();
 
 	//Init the OpenGL stuff
@@ -37,7 +37,7 @@ public:
 
 private:
 	// Members
-	MainFrame* parentFrame;
+	deprecatedMainFrame* parentFrame;
 	wxGLContext* oglContext;
 	//myOGLManager* m_oglManager;
 	int           m_winHeight; // We use this var to know if we have been sized

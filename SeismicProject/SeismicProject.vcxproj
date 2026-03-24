@@ -146,7 +146,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="CurlHandler.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="MainFrame.cpp" />
+    <ClCompile Include="deprecatedMainFrame.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -154,7 +154,7 @@
     <ClInclude Include="CurlHandler.h" />
     <ClInclude Include="dependencies\include\glad\glad.h" />
     <ClInclude Include="dependencies\include\KHR\khrplatform.h" />
-    <ClInclude Include="MainFrame.h" />
+    <ClInclude Include="deprecatedMainFrame.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

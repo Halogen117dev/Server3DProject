@@ -1,8 +1,8 @@
-#include "MainFrame.h"
+#include "deprecatedMainFrame.h"
 #include<wx/wx.h>
 
 
-MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
+deprecatedMainFrame::deprecatedMainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 {
 	CreateControls();
 	SetupSizers();
@@ -27,7 +27,7 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title)
 	
 }
 
-void MainFrame::CreateControls()
+void deprecatedMainFrame::CreateControls()
 {
 	MainPanel			= new wxPanel(this, wxID_ANY);
 	MainPanel->SetBackgroundColour(wxString("AQUAMARINE"));
@@ -42,7 +42,7 @@ void MainFrame::CreateControls()
 	LogPanel->SetBackgroundColour(wxString("WHEAT"));
 }
 
-void MainFrame::SetupSizers()
+void deprecatedMainFrame::SetupSizers()
 {
 	wxBoxSizer* mainSizer = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* graphicsAndLogSizer = new wxBoxSizer(wxVERTICAL);
@@ -59,7 +59,7 @@ void MainFrame::SetupSizers()
 }
 
 
-GraphicsCanvas::GraphicsCanvas(MainFrame* parent, const wxGLAttributes& canvasAttrs)
+GraphicsCanvas::GraphicsCanvas(deprecatedMainFrame* parent, const wxGLAttributes& canvasAttrs)
 	:wxGLCanvas(parent, canvasAttrs)
 {
 	parentFrame = parent;
