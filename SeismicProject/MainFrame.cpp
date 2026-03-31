@@ -13,9 +13,9 @@ MainFrame::MainFrame(const wxString& title)
     {
         
         openGLCanvas = new OGLCanvas(this, vAttrs);
-        openGLCanvas->SetMinSize(wxSize(640, 800));
+        //openGLCanvas->SetMinSize(wxSize(640, 800));
     }
-
+    this->SetMinSize(wxSize(240, 144));
     //MyCurlHandler = new CurlHandler("http://127.0.0.1:5000/api/v1/health");
 
 }

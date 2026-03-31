@@ -7,7 +7,7 @@ deprecatedMainFrame::deprecatedMainFrame(const wxString& title) : wxFrame(nullpt
 	CreateControls();
 	SetupSizers();
 
-	MyGraphicsCanvas = NULL;
+	MyGraphicsCanvas = nullptr;
 	wxGLAttributes vAttrs;
 	vAttrs.PlatformDefaults().Defaults().EndList();
 
@@ -63,7 +63,7 @@ GraphicsCanvas::GraphicsCanvas(deprecatedMainFrame* parent, const wxGLAttributes
 	:wxGLCanvas(parent, canvasAttrs)
 {
 	parentFrame = parent;
-	oglContext = NULL;
+	oglContext = nullptr;
 	m_winHeight = 0; // We have not been sized yet
 
 	wxGLContextAttrs contextAttribs;

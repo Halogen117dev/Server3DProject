@@ -1,6 +1,8 @@
 #pragma once
 #include<wx/wx.h>
 
+class MainFrame;
+
 class App : public wxApp
 {
 public:
@@ -8,5 +10,8 @@ public:
 
 	bool OnInit() override;
 	int OnExit() override;
+
+private:
+	MainFrame* MyFrame = nullptr;
 };
 

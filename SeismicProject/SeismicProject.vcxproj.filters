@@ -39,6 +39,9 @@
     <ClCompile Include="glad.c">
       <Filter>glad</Filter>
     </ClCompile>
+    <ClCompile Include="GPUManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h">
@@ -64,6 +67,9 @@
     </ClInclude>
     <ClInclude Include="dependencies\include\glad\glad.h">
       <Filter>glad</Filter>
+    </ClInclude>
+    <ClInclude Include="GPUManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

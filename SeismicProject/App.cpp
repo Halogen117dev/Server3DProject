@@ -10,15 +10,14 @@
 
 wxIMPLEMENT_APP(App);
 
-MainFrame* frame;
 
 bool App::OnInit()
 {
     if (!wxApp::OnInit())
         return false;
 
-    frame = new MainFrame("Hello OpenGL");
-    frame->Show(true);
+    MyFrame = new MainFrame("Hello OpenGL");
+    MyFrame->Show(true);
 
     return true;
 }

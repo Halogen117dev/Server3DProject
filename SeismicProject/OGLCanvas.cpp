@@ -8,19 +8,24 @@ OGLCanvas::OGLCanvas(MainFrame* parent, const wxGLAttributes& canvasAttrs)
 
     wxGLContextAttrs ctxAttrs;
     ctxAttrs.PlatformDefaults().CoreProfile().OGLVersion(4, 6).EndList();
-    openGLContext = new wxGLContext(this, nullptr, &ctxAttrs);
+    OGLContext = new wxGLContext(this, nullptr, &ctxAttrs);
 
-    if (!openGLContext->IsOK())
+    if (!OGLContext->IsOK())
     {
         wxMessageBox(
             "This sample needs an OpenGL 4.6 capable driver.",
             "OpenGL Version Error!",
             wxOK | wxICON_INFORMATION, this);
-        delete openGLContext;
-        openGLContext = nullptr;
+        delete OGLContext;
+        OGLContext = nullptr;
     }
 
     VAO = VBO = ShaderProgram = 0;
+
+    //GPUManager NEW STUFF
+    //WARNING haven't checked if OGLContext exists or not!
+    MyGPU = new GPUManager(OGLContext, this);
+
 
     Bind(wxEVT_PAINT, &OGLCanvas::OnPaint, this);
     Bind(wxEVT_IDLE, &OGLCanvas::OnIdle, this);
@@ -29,10 +34,10 @@ OGLCanvas::OGLCanvas(MainFrame* parent, const wxGLAttributes& canvasAttrs)
 
 OGLCanvas::~OGLCanvas()
 {
-    delete openGLContext;
+    delete OGLContext;
 }
 
-
+//UNUSED BOTH INITOGL AND INITOGLFUNCTIONS
 bool OGLCanvas::InitOpenGLFunctions()
 {
     GLenum version = gladLoadGL();
@@ -53,10 +58,13 @@ bool OGLCanvas::InitOpenGLFunctions()
 
 bool OGLCanvas::InitOpenGL()
 {
-    if (!openGLContext)
+    if (!OGLContext)
         return false;
 
-    SetCurrent(*openGLContext);
+    SetCurrent(*OGLContext);
+
+    //GPUManager.InitOGL();
+
 
     if (!InitOpenGLFunctions())
     {
@@ -157,16 +165,21 @@ bool OGLCanvas::InitOpenGL()
 }
 
 
+//OLD ONPAINT
+/*
 void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 {
+    
     wxPaintDC dc(this);
 
     bool firstAppearance = IsShownOnScreen() && !IsOpenGLInitialized;
 
-    if (firstAppearance)
-    {
-        SetCurrent(*openGLContext);
-    }
+    //SetCurrent Redundant
+    //if (firstAppearance)
+    //{
+    //    SetCurrent(*OGLContext);
+    //}
+
 
     if (ParentCurlHandler)
     {
@@ -201,11 +214,13 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
         b = 0.0f;
     }
 
-    /*std::stringstream sstream;
-    sstream << ParentCurlHandler->ElapsedTimeSinceRequest << "   " << ParentCurlHandler->CurlTimer.DebugGetDT();
-    wxLogLastError(sstream.str());*/
+    //std::stringstream sstream;
+    //sstream << ParentCurlHandler->ElapsedTimeSinceRequest << "   " << ParentCurlHandler->CurlTimer.DebugGetDT();
+    //wxLogLastError(sstream.str());
 
 
+    //GameManager.Update();
+    //GPUManager.Render();
     glClearColor(r, g, b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -213,9 +228,75 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
+    //Swap happens in this function after all rendering is done
+    SwapBuffers();
+
+}
+*/
+
+void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
+{
+    wxPaintDC dc(this);
+
+    bool firstAppearance = IsShownOnScreen() && !MyGPU->GetOGLInitStatus();
+    
+    //SetCurrent Redundant
+    if (firstAppearance)
+    {
+        SetCurrent(*OGLContext);
+    }
+    
+
+
+    if (ParentCurlHandler)
+    {
+        CurlHandler::ServerState serverState = ParentCurlHandler->RequestServerState();
+
+        if (serverState.UnknownStatus)
+        {
+            r = 0.0f;
+            g = 0.0f;
+            b = 1.0f;
+        }
+        else
+        {
+            if (serverState.IsUp)
+            {
+                r = 0.0f;
+                g = 1.0f;
+                b = 0.0f;
+            }
+            else if (!serverState.IsUp)
+            {
+                r = 1.0f;
+                g = 0.0f;
+                b = 0.0f;
+            }
+        }
+    }
+    else
+    {
+        r = 0.0f;
+        g = 0.0f;
+        b = 0.0f;
+    }
+
+    //std::stringstream sstream;
+    //sstream << ParentCurlHandler->ElapsedTimeSinceRequest << "   " << ParentCurlHandler->CurlTimer.DebugGetDT();
+    //wxLogLastError(sstream.str());
+
+    MyGPU->SetBGColor(r, g, b);
+
+    MyGPU->Render();
+
     SwapBuffers();
 }
 
+
+
+
+
+//WORKS FOR NEW IMPLEMENTATION TOO!
 void OGLCanvas::OnIdle(wxIdleEvent& event)
 {
     Refresh();
@@ -225,6 +306,9 @@ void OGLCanvas::OnIdle(wxIdleEvent& event)
     event.Skip();
 }
 
+
+//OLD ONSIZE
+/*
 void OGLCanvas::OnSize(wxSizeEvent& event)
 {
     bool firstAppearance = IsShownOnScreen() && !IsOpenGLInitialized;
@@ -235,6 +319,26 @@ void OGLCanvas::OnSize(wxSizeEvent& event)
     }
 
     if (IsOpenGLInitialized)
+    {
+        auto viewPortSize = event.GetSize();
+        glViewport(0, 0, viewPortSize.x, viewPortSize.y);
+    }
+
+    event.Skip();
+}
+*/
+
+void OGLCanvas::OnSize(wxSizeEvent& event)
+{
+    bool firstAppearance = IsShownOnScreen() && !MyGPU->GetOGLInitStatus();
+    
+    if (firstAppearance)
+    {
+        SetCurrent(*OGLContext);
+        MyGPU->InitOGL();
+    }
+
+    if (MyGPU->GetOGLInitStatus())
     {
         auto viewPortSize = event.GetSize();
         glViewport(0, 0, viewPortSize.x, viewPortSize.y);

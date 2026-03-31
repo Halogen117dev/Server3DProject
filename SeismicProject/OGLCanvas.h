@@ -1,8 +1,9 @@
 #pragma once
-#include<wx/wx.h>
-#include<glad/glad.h> //must be included before glcanvas.h
-#include<wx/glcanvas.h>
+//#include<wx/wx.h>
+//#include<glad/glad.h> //must be included before glcanvas.h
+//#include<wx/glcanvas.h>
 
+#include"GPUManager.h"
 #include"CurlHandler.h"
 #include"MainFrame.h"
 
@@ -22,9 +23,11 @@ public:
     CurlHandler* ParentCurlHandler;
 private:
     float r = 0.0f, g = 0.0f, b = 0.0f;
-    wxGLContext* openGLContext;
     bool IsOpenGLInitialized{ false };
 
     unsigned int VAO, VBO, ShaderProgram;
+
+    wxGLContext* OGLContext;
+    GPUManager* MyGPU;
 };
 

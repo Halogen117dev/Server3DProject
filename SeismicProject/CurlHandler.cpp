@@ -6,7 +6,7 @@ CurlHandler::CurlHandler(const char* CurlURL)
 {
 	MyCurl = curl_easy_init();
 
-	if (MyCurl == NULL)
+	if (MyCurl == nullptr)
 	{
 		throw 123;
 	}
@@ -73,5 +73,10 @@ CurlHandler::ServerState CurlHandler::RequestServerState()
 	}
 
 	ElapsedTimeSinceRequest += CurlTimer.DT();
+	return MyServerState;
+}
+
+CurlHandler::ServerState CurlHandler::GetServerState()
+{
 	return MyServerState;
 }
