@@ -16,6 +16,21 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Header Files\Shaders">
+      <UniqueIdentifier>{b6d69390-a6e3-465a-a3fc-a4b4c4c035fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders %28Source%29">
+      <UniqueIdentifier>{5efc9680-f5a6-4f8c-a91b-79983d96349c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders %28Source%29\Vertex Shaders">
+      <UniqueIdentifier>{407a082d-888c-4009-96cf-3f8125423a42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{b7716e3a-d1c2-42bb-9570-df46f27f0e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders %28Source%29\Fragment Shaders">
+      <UniqueIdentifier>{1834b67e-b6af-4406-892c-b23f82ec0673}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="deprecatedMainFrame.cpp">
@@ -41,6 +56,18 @@
     </ClCompile>
     <ClCompile Include="GPUManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FragmentShader.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShader.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultShader.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderProgram.cpp">
+      <Filter>Source Files\Shaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,5 +98,26 @@
     <ClInclude Include="GPUManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FragmentShader.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShader.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultShader.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderProgram.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Fragment.frag">
+      <Filter>Shaders %28Source%29\Fragment Shaders</Filter>
+    </None>
+    <None Include="Vertex.vert">
+      <Filter>Shaders %28Source%29\Vertex Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

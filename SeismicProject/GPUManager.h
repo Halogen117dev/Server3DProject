@@ -3,6 +3,8 @@
 #include<glad/glad.h>
 #include<wx/glcanvas.h>
 
+#include "ShaderProgram.h"
+
 class GPUManager
 {
 public:
@@ -24,8 +26,10 @@ private:
 	bool IsOGLInitialized{ false };
 	unsigned int
 		VAO,
-		VBO,
-		ShaderProgram;
+		VBO;
+		//ShaderProgram;
+
+	ShaderProgram* MyShaderProgram;
 
 private:
 	struct Color
