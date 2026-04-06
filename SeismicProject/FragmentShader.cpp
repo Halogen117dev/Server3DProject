@@ -10,7 +10,3 @@ FragmentShader::FragmentShader()
 	glCompileShader(Handle);
 }
 
-FragmentShader::~FragmentShader()
-{
-	glDeleteShader(Handle);
-}

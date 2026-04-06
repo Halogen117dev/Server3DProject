@@ -6,6 +6,7 @@ class DefaultShader
 {
 public:
 	DefaultShader();
+	~DefaultShader();
 
 	unsigned int GetHandle();
 protected:

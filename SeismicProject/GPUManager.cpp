@@ -9,6 +9,7 @@ GPUManager::GPUManager(wxGLContext* openGLContext, wxGLCanvas* parentGLCanvas)
 
 GPUManager::~GPUManager()
 {
+    delete(MyShaderProgram);
 }
 
 bool GPUManager::InitOGLFunctions()
@@ -51,6 +52,8 @@ bool GPUManager::InitOGL()
     char infoLog[1024];
 
     MyShaderProgram = new ShaderProgram();
+    MyShaderProgram->AddShader(std::make_shared<VertexShader>());
+    MyShaderProgram->AddShader(std::make_shared<FragmentShader>());
     MyShaderProgram->AttachAndLink();
 
     glGetProgramiv(MyShaderProgram->GetHandle(), GL_LINK_STATUS, &success);

@@ -7,6 +7,11 @@ DefaultShader::DefaultShader()
 {
 }
 
+DefaultShader::~DefaultShader()
+{
+	glDeleteShader(Handle);
+}
+
 unsigned int DefaultShader::GetHandle()
 {
 	return Handle;

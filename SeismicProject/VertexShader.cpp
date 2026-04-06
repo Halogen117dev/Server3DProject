@@ -9,8 +9,3 @@ VertexShader::VertexShader()
 	glShaderSource(Handle, 1, &vertexCode, nullptr);
 	glCompileShader(Handle);
 }
-
-VertexShader::~VertexShader()
-{
-	glDeleteShader(Handle);
-}

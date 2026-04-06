@@ -5,13 +5,21 @@
 ShaderProgram::ShaderProgram()
 {
 	Handle = glCreateProgram();
-	Shaders.push_back(new VertexShader());
-	Shaders.push_back(new FragmentShader());
+	/*Shaders.push_back(new VertexShader());
+	Shaders.push_back(new FragmentShader());*/
 }
 
 ShaderProgram::~ShaderProgram()
 {
+	/*for (int i = 0; i < Shaders.size(); i++)
+	{
+		delete(Shaders[i]);
+	}*/
+}
 
+void ShaderProgram::AddShader(std::shared_ptr<DefaultShader> shader)
+{
+	Shaders.push_back(shader);
 }
 
 unsigned int ShaderProgram::GetHandle()
@@ -31,8 +39,6 @@ bool ShaderProgram::AttachAndLink()
 	{
 		glDetachShader(Handle, Shaders[i]->GetHandle());
 	}
-
-	Shaders.clear();
 
 	return true;
 }
