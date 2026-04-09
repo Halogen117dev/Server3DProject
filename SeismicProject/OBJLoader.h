@@ -7,6 +7,8 @@
 #include<sstream>
 #include<algorithm>
 
+//#include<assimp/config.h>
+
 class OBJLoader
 {
 
