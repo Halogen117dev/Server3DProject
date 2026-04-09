@@ -1,9 +1,29 @@
 #pragma once
 #include<glad/glad.h>
+
 #include<string>
+#include<exception>
 
 class DefaultShader
 {
+public:
+	class ShaderException : public std::exception
+	{
+	public:
+		ShaderException(const char* message) noexcept
+		{
+			Message = message;
+		}
+
+		const char* what() const noexcept override
+		{
+			return Message.c_str();
+		}
+	private:
+		std::string Message;
+	};
+
+
 public:
 	DefaultShader();
 	~DefaultShader();

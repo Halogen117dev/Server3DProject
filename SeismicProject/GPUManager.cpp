@@ -51,17 +51,17 @@ bool GPUManager::InitOGL()
     int success;
     char infoLog[1024];
 
-    MyShaderProgram = new ShaderProgram();
-    MyShaderProgram->AddShader(std::make_shared<VertexShader>());
-    MyShaderProgram->AddShader(std::make_shared<FragmentShader>());
-    MyShaderProgram->AttachAndLink();
-
-    glGetProgramiv(MyShaderProgram->GetHandle(), GL_LINK_STATUS, &success);
-
-    if (!success)
+    try 
     {
-        glGetShaderInfoLog(MyShaderProgram->GetHandle(), 1024, nullptr, infoLog);
-        wxLogDebug("Shader Program Linking Failed: %s", infoLog);
+        MyShaderProgram = new ShaderProgram();
+        MyShaderProgram->AddShader(std::make_shared<VertexShader>());
+        MyShaderProgram->AddShader(std::make_shared<FragmentShader>());
+        MyShaderProgram->AttachAndLink();
+    }
+    catch (DefaultShader::ShaderException e)
+    {
+        wxLogDebug("Shader Program Linking Failed: %s", e.what());
+
     }
 
     

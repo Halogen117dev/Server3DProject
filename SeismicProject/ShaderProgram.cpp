@@ -11,10 +11,7 @@ ShaderProgram::ShaderProgram()
 
 ShaderProgram::~ShaderProgram()
 {
-	/*for (int i = 0; i < Shaders.size(); i++)
-	{
-		delete(Shaders[i]);
-	}*/
+	//do anything
 }
 
 void ShaderProgram::AddShader(std::shared_ptr<DefaultShader> shader)
@@ -34,6 +31,15 @@ bool ShaderProgram::AttachAndLink()
 		glAttachShader(Handle, Shaders[i]->GetHandle());
 	}
 	glLinkProgram(Handle);
+
+	int success;
+	char infoLog[2048];
+	glGetProgramiv(Handle, GL_LINK_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(Handle, 2048, nullptr, infoLog);
+		throw(new DefaultShader::ShaderException(infoLog));
+	}
 
 	for (int i = 0; i < Shaders.size(); i++)
 	{

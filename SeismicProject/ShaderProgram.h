@@ -3,16 +3,14 @@
 #include"FragmentShader.h"
 
 #include<vector>
+#include<string>
 #include<memory>
 #include<exception>
 
 class ShaderProgram
 {
 public:
-	class ShaderException : public std::exception
-	{
 
-	};
 
 public:
 	ShaderProgram();
