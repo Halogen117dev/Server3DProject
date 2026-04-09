@@ -1,6 +1,7 @@
 #include "OGLCanvas.h"
 
 
+
 OGLCanvas::OGLCanvas(MainFrame* parent, const wxGLAttributes& canvasAttrs)
     : wxGLCanvas(parent, canvasAttrs)
 {
@@ -83,8 +84,9 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     //sstream << ParentCurlHandler->ElapsedTimeSinceRequest << "   " << ParentCurlHandler->CurlTimer.DebugGetDT();
     //wxLogLastError(sstream.str());
 
-    MyGPU->SetBGColor(r, g, b);
+    //GameManager->Update stuff
 
+    MyGPU->SetBGColor(r, g, b);
     MyGPU->Render();
 
     SwapBuffers();
