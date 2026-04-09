@@ -3,7 +3,7 @@
 #include<glad/glad.h>
 #include<wx/glcanvas.h>
 
-#include "ShaderProgram.h"
+#include "Model.h"
 
 class GPUManager
 {
@@ -24,12 +24,14 @@ private:
 	wxGLCanvas* ParentGLCanvas;
 	wxGLContext* OGLContext;
 	bool IsOGLInitialized{ false };
-	unsigned int
-		VAO,
-		VBO;
-		//ShaderProgram;
+	
+	//Replaced everything with Model Class
+	//unsigned int
+	//	VAO,
+	//	VBO;
+	//ShaderProgram* MyShaderProgram;
 
-	ShaderProgram* MyShaderProgram;
+	Model* MyModel;
 
 private:
 	struct Color

@@ -151,6 +151,8 @@
     <ClCompile Include="deprecatedMainFrame.cpp" />
     <ClCompile Include="GPUManager.cpp" />
     <ClCompile Include="MainFrame.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="OGLCanvas.cpp" />
     <ClCompile Include="FragmentShader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
@@ -166,6 +168,8 @@
     <ClInclude Include="deprecatedMainFrame.h" />
     <ClInclude Include="GPUManager.h" />
     <ClInclude Include="MainFrame.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="OGLCanvas.h" />
     <ClInclude Include="FragmentShader.h" />
     <ClInclude Include="ShaderProgram.h" />
