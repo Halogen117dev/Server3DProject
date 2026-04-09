@@ -18,11 +18,11 @@ public:
 
 	void AddShader(std::shared_ptr<DefaultShader> shader);
 
-	unsigned int GetHandle();
+	GLuint GetHandle();
 	bool AttachAndLink();
 
 private:
-	unsigned int Handle;
+	GLuint Handle;
 	std::vector<std::shared_ptr<DefaultShader>> Shaders;
 };
 

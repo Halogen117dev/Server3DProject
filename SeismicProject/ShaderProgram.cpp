@@ -19,7 +19,7 @@ void ShaderProgram::AddShader(std::shared_ptr<DefaultShader> shader)
 	Shaders.push_back(shader);
 }
 
-unsigned int ShaderProgram::GetHandle()
+GLuint ShaderProgram::GetHandle()
 {
 	return Handle;
 }
@@ -32,8 +32,8 @@ bool ShaderProgram::AttachAndLink()
 	}
 	glLinkProgram(Handle);
 
-	int success;
-	char infoLog[2048];
+	GLint success;
+	GLchar infoLog[2048];
 	glGetProgramiv(Handle, GL_LINK_STATUS, &success);
 	if (!success)
 	{

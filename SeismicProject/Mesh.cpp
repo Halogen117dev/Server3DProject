@@ -1,8 +1,8 @@
 #include "Mesh.h"
 
-Mesh::Mesh(float* vertices, int nVertices)
+Mesh::Mesh(GLfloat* vertices, GLuint nVertices)
 {
-	for (int i = 0; i < nVertices; i++)
+	for (GLuint i = 0; i < nVertices; i++)
 	{
 		Vertices.push_back(vertices[i]);
 	}
@@ -12,8 +12,8 @@ Mesh::Mesh(float* vertices, int nVertices)
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, Vertices.size() * sizeof(float), Vertices.data(), GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glBufferData(GL_ARRAY_BUFFER, Vertices.size() * sizeof(GLfloat), Vertices.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -25,12 +25,12 @@ Mesh::~Mesh()
     //glDeleteBuffers(1, &VBO);
 }
 
-unsigned int Mesh::GetVAO()
+GLuint Mesh::GetVAO()
 {
     return VAO;
 }
 
-unsigned int Mesh::GetVBO()
+GLuint Mesh::GetVBO()
 {
     return VBO;
 }

@@ -16,7 +16,7 @@ public:
 
 	bool Render();
 
-	void SetBGColor(float red, float green, float blue);
+	void SetBGColor(glm::vec3 bgColor);
 
 	bool GetOGLInitStatus();
 
@@ -24,24 +24,10 @@ private:
 	wxGLCanvas* ParentGLCanvas;
 	wxGLContext* OGLContext;
 	bool IsOGLInitialized{ false };
-	
-	//Replaced everything with Model Class
-	//unsigned int
-	//	VAO,
-	//	VBO;
-	//ShaderProgram* MyShaderProgram;
 
 	Model* MyModel;
 
 private:
-	struct Color
-	{
-		float
-			red,
-			green,
-			blue;
-	};
-
-	Color BGColor{ 1.0f, 1.0f, 1.0f };
+	glm::vec4 BGColor;
 };
 

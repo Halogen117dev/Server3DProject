@@ -19,7 +19,8 @@ public:
 
     CurlHandler* ParentCurlHandler;
 private:
-    float r = 0.0f, g = 0.0f, b = 0.0f;
+
+    glm::vec3 BGColor;
 
     wxGLContext* OGLContext;
     GPUManager* MyGPU;

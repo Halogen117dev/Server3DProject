@@ -77,7 +77,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SeismicProject\dependencies\include\GlMaths;D:\External Libraries\glad\src;D:\External Libraries\glad\include;$(WXWIN)\include\msvc;$(WXWIN)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SeismicProject\dependencies\include\stb_image;$(SolutionDir)\SeismicProject\dependencies\include\GlMaths;D:\External Libraries\glad\src;D:\External Libraries\glad\include;$(WXWIN)\include\msvc;$(WXWIN)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
     </ClCompile>
@@ -95,7 +95,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SeismicProject\dependencies\include\GlMaths;D:\External Libraries\glad\src;D:\External Libraries\glad\include;$(WXWIN)\include\msvc;$(WXWIN)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SeismicProject\dependencies\include\stb_image;$(SolutionDir)\SeismicProject\dependencies\include\GlMaths;D:\External Libraries\glad\src;D:\External Libraries\glad\include;$(WXWIN)\include\msvc;$(WXWIN)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
     </ClCompile>
@@ -113,7 +113,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SeismicProject\dependencies\include\GlMaths;D:\External Libraries\glad\include;D:\External Libraries\glad\src;$(WXWIN)\include\msvc;$(WXWIN)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SeismicProject\dependencies\include\stb_image;$(SolutionDir)\SeismicProject\dependencies\include\GlMaths;D:\External Libraries\glad\include;D:\External Libraries\glad\src;$(WXWIN)\include\msvc;$(WXWIN)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
     </ClCompile>
@@ -131,7 +131,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SeismicProject\dependencies\include\GlMaths;D:\External Libraries\glad\include;D:\External Libraries\glad\src;$(WXWIN)\include\msvc;$(WXWIN)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SeismicProject\dependencies\include\stb_image;$(SolutionDir)\SeismicProject\dependencies\include\GlMaths;D:\External Libraries\glad\include;D:\External Libraries\glad\src;$(WXWIN)\include\msvc;$(WXWIN)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
     </ClCompile>
@@ -153,6 +153,7 @@
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="OGLCanvas.cpp" />
     <ClCompile Include="FragmentShader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="OGLCanvas.h" />
     <ClInclude Include="FragmentShader.h" />
     <ClInclude Include="ShaderProgram.h" />

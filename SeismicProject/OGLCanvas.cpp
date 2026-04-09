@@ -5,6 +5,12 @@
 OGLCanvas::OGLCanvas(MainFrame* parent, const wxGLAttributes& canvasAttrs)
     : wxGLCanvas(parent, canvasAttrs)
 {
+    //Other Stuff
+    BGColor.r = 0.0f;
+    BGColor.g = 0.0f;
+    BGColor.b = 0.0f;
+    //Other Stuff
+
     ParentCurlHandler = parent->MyCurlHandler;
 
     wxGLContextAttrs ctxAttrs;
@@ -53,31 +59,31 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 
         if (serverState.UnknownStatus)
         {
-            r = 0.0f;
-            g = 0.0f;
-            b = 1.0f;
+            BGColor.r = 0.0f;
+            BGColor.g = 0.0f;
+            BGColor.b = 1.0f;
         }
         else
         {
             if (serverState.IsUp)
             {
-                r = 0.0f;
-                g = 1.0f;
-                b = 0.0f;
+                BGColor.r = 0.0f;
+                BGColor.g = 1.0f;
+                BGColor.b = 0.0f;
             }
             else if (!serverState.IsUp)
             {
-                r = 1.0f;
-                g = 0.0f;
-                b = 0.0f;
+                BGColor.r = 1.0f;
+                BGColor.g = 0.0f;
+                BGColor.b = 0.0f;
             }
         }
     }
     else
     {
-        r = 0.0f;
-        g = 0.0f;
-        b = 0.0f;
+        BGColor.r = 0.0f;
+        BGColor.g = 0.0f;
+        BGColor.b = 0.0f;
     }
 
     //std::stringstream sstream;
@@ -86,7 +92,7 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 
     //GameManager->Update stuff
 
-    MyGPU->SetBGColor(r, g, b);
+    MyGPU->SetBGColor(BGColor);
     MyGPU->Render();
 
     SwapBuffers();
@@ -97,8 +103,6 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 void OGLCanvas::OnIdle(wxIdleEvent& event)
 {
     Refresh();
-    /*r += 0.0001;
-    r = std::fmod(r, 1.0f);*/
 
     event.Skip();
 }

@@ -6,6 +6,8 @@ GPUManager::GPUManager(wxGLContext* openGLContext, wxGLCanvas* parentGLCanvas)
     OGLContext(openGLContext),
     ParentGLCanvas(parentGLCanvas)
 {
+    MyModel = nullptr;
+    BGColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 GPUManager::~GPUManager()
@@ -61,18 +63,16 @@ bool GPUManager::Render()
     //wxLogDebug("TS RENDERIN");
     
     
-    glClearColor(BGColor.red, BGColor.green, BGColor.blue, 1.0f);
+    glClearColor(BGColor.r, BGColor.g, BGColor.b, BGColor.a);
     glClear(GL_COLOR_BUFFER_BIT);
 
     MyModel->Render();
     return true;
 }
 
-void GPUManager::SetBGColor(float red, float green, float blue)
+void GPUManager::SetBGColor(glm::vec3 bgColor)
 {
-    BGColor.red = red;
-    BGColor.green = green;
-    BGColor.blue = blue;
+    BGColor = glm::vec4(bgColor, 1.0f);
 }
 
 bool GPUManager::GetOGLInitStatus()

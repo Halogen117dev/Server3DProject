@@ -1,6 +1,14 @@
 #pragma once
 #include<glad/glad.h>
 
+#include<glm/glm.hpp>
+#include<glm/vec2.hpp>
+#include<glm/vec3.hpp>
+#include<glm/vec4.hpp>
+#include<glm/mat4x4.hpp>
+#include<glm/gtc/matrix_transform.hpp>
+#include<glm/gtc/type_ptr.hpp>
+
 #include<string>
 #include<exception>
 
@@ -28,9 +36,9 @@ public:
 	DefaultShader();
 	~DefaultShader();
 
-	unsigned int GetHandle();
+	GLuint GetHandle();
 protected:
-	unsigned int Handle;
+	GLuint Handle;
 
 	//HELPER FOR READING OF SHADER FILES
 	std::string get_file_contents(const char* filename);

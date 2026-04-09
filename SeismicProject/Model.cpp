@@ -2,7 +2,7 @@
 
 Model::Model()
 {
-    float vertices[]
+    GLfloat vertices[]
     {
         -0.5f, -0.5f, 0.0f,
         0.5f, -0.5f, 0.0f,
