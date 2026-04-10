@@ -54,6 +54,18 @@ bool GPUManager::InitOGL()
 
     IsOGLInitialized = true;
 
+    //OPENGL Options
+    glEnable(GL_DEPTH_TEST);
+    
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glFrontFace(GL_CCW);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
     return true;
 }
 
@@ -64,7 +76,8 @@ bool GPUManager::Render()
     
     
     glClearColor(BGColor.r, BGColor.g, BGColor.b, BGColor.a);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    
 
     MyModel->Render();
     return true;

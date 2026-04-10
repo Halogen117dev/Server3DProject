@@ -17,17 +17,27 @@ public:
 	//Mesh consists of vertices, parameters being said vertices
 	//and number of vertices.
 	Mesh(GLfloat* vertices, GLuint nVertices);
+	Mesh(GLfloat* vertices, GLuint nVertices, GLuint* indices, GLuint nIndices);
 	~Mesh();
+
+	void CreateVertexData();
 
 private:
 	unsigned int
 		VAO,
-		VBO;
+		VBO,
+		EBO;
 	std::vector<GLfloat> Vertices;
-
+	std::vector<GLuint> Indices;
+	bool IsIndexed;
 public:
 	//Getter methods for VAO/VBO
 	GLuint GetVAO();
 	GLuint GetVBO();
+	GLuint GetEBO();
+	bool GetIsIndexed();
+	
+	GLuint GetNumVertices();
+	GLuint GetNumIndices();
 };
 

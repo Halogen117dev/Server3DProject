@@ -31,10 +31,10 @@
     <Filter Include="Shaders %28Source%29\Fragment Shaders">
       <UniqueIdentifier>{1834b67e-b6af-4406-892c-b23f82ec0673}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\ModeLoader">
+    <Filter Include="Header Files\Loader">
       <UniqueIdentifier>{feb5dc5e-07c1-48d8-833d-ec7a20e769e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ModelLoader">
+    <Filter Include="Source Files\Loader">
       <UniqueIdentifier>{b6d8f311-b17e-4215-8c83-b2282bd6b872}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -82,7 +82,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OBJLoader.cpp">
-      <Filter>Source Files\ModelLoader</Filter>
+      <Filter>Source Files\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -132,7 +135,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OBJLoader.h">
-      <Filter>Header Files\ModeLoader</Filter>
+      <Filter>Header Files\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

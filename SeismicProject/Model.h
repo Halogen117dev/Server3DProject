@@ -14,7 +14,7 @@ public:
 
 	void Render();
 private:
-	std::unique_ptr<Mesh> mesh;
 	std::unique_ptr<ShaderProgram> shaderProgram;
+	std::vector<std::unique_ptr<Mesh>> Meshes;
 };
 
