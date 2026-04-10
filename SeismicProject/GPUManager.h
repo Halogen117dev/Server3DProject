@@ -3,6 +3,9 @@
 #include<glad/glad.h>
 #include<wx/glcanvas.h>
 
+#include<vector>
+#include<memory>
+
 #include "Model.h"
 
 class GPUManager
@@ -25,8 +28,7 @@ private:
 	wxGLContext* OGLContext;
 	bool IsOGLInitialized{ false };
 
-	Model* MyModel;
-
+	std::vector<std::shared_ptr<Model>> ModelList;
 private:
 	glm::vec4 BGColor;
 };

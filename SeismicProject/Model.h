@@ -12,6 +12,11 @@ public:
 	Model();
 	~Model();
 
+	
+private:
+	//THIS ALLOWS ONLY THE GPU MANAGER TO USE THE RENDER FUNCTION.
+	//HOWEVER, PROBLEM ARISES AS GPU MANAGER CAN ALSO NOW ACCESS OTHER PRIVATE MEMBERS.
+	friend class GPUManager;
 	void Render();
 private:
 	std::unique_ptr<ShaderProgram> shaderProgram;
