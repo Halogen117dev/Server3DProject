@@ -14,24 +14,30 @@
 class Mesh
 {
 public:
+	struct Vertex
+	{
+		glm::vec3 Position;
+		glm::vec2 UVCoord;
+	};
+
 	//Mesh consists of vertices, parameters being said vertices
 	//and number of vertices.
-	Mesh(GLfloat* vertices, GLuint nVertices);
-	Mesh(GLfloat* vertices, GLuint nVertices, GLuint* indices, GLuint nIndices);
+	Mesh(Vertex* vertices, GLuint nVertices);
+	Mesh(Vertex* vertices, GLuint nVertices, GLuint* indices, GLuint nIndices);
 	~Mesh();
 
+private:
 	void CreateVertexData();
 
-private:
 	unsigned int
 		VAO,
 		VBO,
 		EBO;
-	std::vector<GLfloat> Vertices;
+	std::vector<Vertex> Vertices;
 	std::vector<GLuint> Indices;
 	bool IsIndexed;
 public:
-	//Getter methods for VAO/VBO
+	//Getter methods
 	GLuint GetVAO();
 	GLuint GetVBO();
 	GLuint GetEBO();

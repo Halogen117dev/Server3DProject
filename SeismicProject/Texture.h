@@ -1,6 +1,6 @@
 #pragma once
 
-#include<stb_image.h>
+#include<glad/glad.h>
 
 #include<vector>
 #include<memory>
@@ -9,6 +9,21 @@
 
 class Texture
 {
+public:
+	Texture(const char* imagePath);
+	~Texture();
+	
+	void Bind();
 
+private:
+	GLuint Handle;
+	int
+		Width,
+		Height,
+		NumChannels;
+
+public:
+	//Getter methods
+	GLuint GetHandle();
 };
 

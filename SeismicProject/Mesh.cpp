@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(GLfloat* vertices, GLuint nVertices)
+Mesh::Mesh(Vertex* vertices, GLuint nVertices)
 {
 	for (GLuint i = 0; i < nVertices; i++)
 	{
@@ -13,7 +13,7 @@ Mesh::Mesh(GLfloat* vertices, GLuint nVertices)
     CreateVertexData();
 }
 
-Mesh::Mesh(GLfloat* vertices, GLuint nVertices, GLuint* indices, GLuint nIndices)
+Mesh::Mesh(Vertex* vertices, GLuint nVertices, GLuint* indices, GLuint nIndices)
 {
     for (GLuint i = 0; i < nVertices; i++)
     {
@@ -46,8 +46,15 @@ void Mesh::CreateVertexData()
 
         glBindVertexArray(VAO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, Vertices.size() * sizeof(GLfloat), Vertices.data(), GL_STATIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+        glBufferData(GL_ARRAY_BUFFER, Vertices.size() * sizeof(Vertex), Vertices.data(), GL_STATIC_DRAW);
+        
+        //Link attributes (set pointers)
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+        glEnableVertexAttribArray(0);   //layout = 0 in vertex shader
+
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3 * sizeof(GLfloat)));
+        glEnableVertexAttribArray(1);   //layout = 1 in vertex shader
+
         glEnableVertexAttribArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
@@ -62,16 +69,19 @@ void Mesh::CreateVertexData()
 
         //VBO STUFF (vertices time)
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, Vertices.size() * sizeof(GLfloat), Vertices.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, Vertices.size() * sizeof(Vertex), Vertices.data(), GL_STATIC_DRAW);
 
         //EBO STUFF (indices time)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, Indices.size() * sizeof(GLuint), Indices.data(), GL_STATIC_DRAW);
 
         //Link attributes (set pointers)
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
         glEnableVertexAttribArray(0);   //layout = 0 in vertex shader
-        
+
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3*sizeof(GLfloat)));
+        glEnableVertexAttribArray(1);   //layout = 1 in vertex shader
+
         //unbind all the stuff. Apparently, we won't be needing VBO/EBO from now on,
         //so might aswell get rid of them later.
         glBindVertexArray(0);
