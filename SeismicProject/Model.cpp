@@ -22,6 +22,7 @@ Model::Model()
     //mesh = std::make_unique<Mesh>(quadVertices, 12, quadIndices, 6);
 
     Textures.push_back(std::make_unique<Texture>("resources/images/master_chief.png"));
+    Textures.push_back(std::make_unique<Texture>("resources/images/bird.png"));
 
     shaderProgram = std::make_unique<ShaderProgram>();
     shaderProgram->AddShader(std::make_shared<VertexShader>());
@@ -34,16 +35,27 @@ Model::~Model()
     
 }
 
+
+//HELPER FUNCTION FOR TEXTURE UNIFORMS
+void setTextureUniform(GLuint shaderProgramHandle, GLuint textureNumber, const char* uniformName, GLuint textureHandle)
+{
+    glUniform1i(glGetUniformLocation(shaderProgramHandle, uniformName), textureNumber);
+
+    glActiveTexture(GL_TEXTURE0 + textureNumber);
+    glBindTexture(GL_TEXTURE_2D, textureHandle);
+}
+
 void Model::Render()
 {
     for (int i = 0; i < Meshes.size(); i++)
     {
-        GLuint texUni = glGetUniformLocation(shaderProgram->GetHandle(), "texture0");
         glUseProgram(shaderProgram->GetHandle());
         
-        glUniform1i(texUni, 0);
-        glActiveTexture(GL_TEXTURE_2D);
-        glBindTexture(GL_TEXTURE_2D, Textures[0]->GetHandle());
+        for (GLuint i = 0; i < Textures.size(); i++)
+        {
+            std::string textureName = "texture" + std::to_string(i);
+            setTextureUniform(shaderProgram->GetHandle(), i, textureName.c_str(), Textures[i]->GetHandle());
+        }
         
         glBindVertexArray(Meshes[i]->GetVAO());
         if (Meshes[i]->GetIsIndexed())
@@ -54,5 +66,10 @@ void Model::Render()
         {
             //glDrawArrays(GL_TRIANGLES, 0, Meshes[i]->GetNumVertices()/GLuint(3));
         }
+
+        glBindVertexArray(0);
+        glUseProgram(0);
+        glActiveTexture(0);
+        glBindTexture(GL_TEXTURE_2D, 0); 
     }      
 }

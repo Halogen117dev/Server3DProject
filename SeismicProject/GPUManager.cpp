@@ -6,13 +6,12 @@ GPUManager::GPUManager(wxGLContext* openGLContext, wxGLCanvas* parentGLCanvas)
     OGLContext(openGLContext),
     ParentGLCanvas(parentGLCanvas)
 {
-    MyModel = nullptr;
     BGColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 GPUManager::~GPUManager()
 {
-    delete(MyModel);
+
 }
 
 bool GPUManager::InitOGLFunctions()
@@ -50,7 +49,7 @@ bool GPUManager::InitOGL()
 	wxLogDebug("OpenGL version: %s", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
 	wxLogDebug("OpenGL vendor: %s", reinterpret_cast<const char*>(glGetString(GL_VENDOR)));
 
-    MyModel = new Model();
+    ModelList.push_back(std::make_shared<Model>());
 
     IsOGLInitialized = true;
 
@@ -78,8 +77,10 @@ bool GPUManager::Render()
     glClearColor(BGColor.r, BGColor.g, BGColor.b, BGColor.a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     
-
-    MyModel->Render();
+    for (int i = 0; i < ModelList.size(); i++)
+    {
+        ModelList[i]->Render();
+    }
     return true;
 }
 
