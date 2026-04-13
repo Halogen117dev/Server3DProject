@@ -6,6 +6,8 @@
 #include"GPUManager.h"
 #include"CurlHandler.h"
 #include"MainFrame.h"
+#include"GameManager.h"
+
 
 class OGLCanvas : public wxGLCanvas
 {
@@ -23,6 +25,7 @@ private:
     glm::vec3 BGColor;
 
     wxGLContext* OGLContext;
+    GameManager* MyGame;
     GPUManager* MyGPU;
 };
 

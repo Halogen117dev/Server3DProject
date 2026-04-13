@@ -14,7 +14,13 @@ public:
 	Model();
 	~Model();
 
-	
+	void Transform(
+		glm::vec3 translation		= glm::vec3(0.0f),
+		glm::vec3 scale				= glm::vec3(1.0f),
+		glm::vec3 rotation			= glm::vec3(0.0f),
+		glm::vec3 rotationOffset	= glm::vec3(0.0f)
+	);
+
 private:
 	//THIS ALLOWS ONLY THE GPU MANAGER TO USE THE RENDER FUNCTION.
 	//HOWEVER, PROBLEM ARISES AS GPU MANAGER CAN ALSO NOW ACCESS OTHER PRIVATE MEMBERS.

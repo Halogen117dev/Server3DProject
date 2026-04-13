@@ -49,7 +49,7 @@ bool GPUManager::InitOGL()
 	wxLogDebug("OpenGL version: %s", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
 	wxLogDebug("OpenGL vendor: %s", reinterpret_cast<const char*>(glGetString(GL_VENDOR)));
 
-    ModelList.push_back(std::make_shared<Model>());
+    //ModelList.push_back(std::make_shared<Model>());
 
     IsOGLInitialized = true;
 
@@ -69,7 +69,7 @@ bool GPUManager::InitOGL()
 }
 
 
-bool GPUManager::Render()
+bool GPUManager::Render(std::vector<std::shared_ptr<Model>> &ModelList)
 {
     //wxLogDebug("TS RENDERIN");
     

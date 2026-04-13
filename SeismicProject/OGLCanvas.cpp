@@ -30,6 +30,7 @@ OGLCanvas::OGLCanvas(MainFrame* parent, const wxGLAttributes& canvasAttrs)
     //GPUManager NEW STUFF
     //WARNING haven't checked if OGLContext exists or not!
     MyGPU = new GPUManager(OGLContext, this);
+    MyGame = nullptr;
 
 
     Bind(wxEVT_PAINT, &OGLCanvas::OnPaint, this);
@@ -91,9 +92,10 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     //wxLogLastError(sstream.str());
 
     //GameManager->Update stuff
+    MyGame->Update();
 
     MyGPU->SetBGColor(BGColor);
-    MyGPU->Render();
+    MyGPU->Render(MyGame->GetModelList());
 
     SwapBuffers();
 }
@@ -120,6 +122,7 @@ void OGLCanvas::OnSize(wxSizeEvent& event)
         //Future work: ADD SETCURRENT CHECK IN RENDER/ONPAINT FUNCTION TO SKIP OGL STUFF
         SetCurrent(*OGLContext);
         MyGPU->InitOGL();
+        MyGame = new GameManager();
     }
 
     if (MyGPU->GetOGLInitStatus())

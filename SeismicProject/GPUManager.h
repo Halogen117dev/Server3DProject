@@ -17,7 +17,7 @@ public:
 	bool InitOGLFunctions();
 	bool InitOGL();
 
-	bool Render();
+	bool Render(std::vector<std::shared_ptr<Model>> &ModelList);
 
 	void SetBGColor(glm::vec3 bgColor);
 
@@ -28,7 +28,8 @@ private:
 	wxGLContext* OGLContext;
 	bool IsOGLInitialized{ false };
 
-	std::vector<std::shared_ptr<Model>> ModelList;
+	//Gone to the GameManager now lol
+	//std::vector<std::shared_ptr<Model>> ModelList;
 private:
 	glm::vec4 BGColor;
 };
