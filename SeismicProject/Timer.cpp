@@ -16,6 +16,12 @@ int Timer::DT()
 	return DeltaTime;
 }
 
+int Timer::GetTime()
+{
+	return 	std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+
+}
+
 int Timer::DebugGetDT()
 {
 	return DeltaTime;

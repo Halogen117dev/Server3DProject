@@ -9,6 +9,11 @@ OGLCanvas::OGLCanvas(MainFrame* parent, const wxGLAttributes& canvasAttrs)
     BGColor.r = 0.0f;
     BGColor.g = 0.0f;
     BGColor.b = 0.0f;
+
+    Height = this->GetSize().x;
+    Width = this->GetSize().y;
+
+    MyTimer = new Timer();
     //Other Stuff
 
     ParentCurlHandler = parent->MyCurlHandler;
@@ -42,6 +47,8 @@ OGLCanvas::~OGLCanvas()
 {
     delete OGLContext;
     delete MyGPU;
+    delete MyGame;
+    delete MyTimer;
 }
 
 
@@ -91,11 +98,14 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     //sstream << ParentCurlHandler->ElapsedTimeSinceRequest << "   " << ParentCurlHandler->CurlTimer.DebugGetDT();
     //wxLogLastError(sstream.str());
 
+
+    int dt = MyTimer->DT();
+    int t = MyTimer->GetTime();
     //GameManager->Update stuff
     MyGame->Update();
 
     MyGPU->SetBGColor(BGColor);
-    MyGPU->Render(MyGame->GetModelList());
+    MyGPU->Render(MyGame->GetModelList(), MyGame->GetCamera());
 
     SwapBuffers();
 }
@@ -129,6 +139,9 @@ void OGLCanvas::OnSize(wxSizeEvent& event)
     {
         auto viewPortSize = event.GetSize();
         glViewport(0, 0, viewPortSize.x, viewPortSize.y);
+        Height = viewPortSize.x;
+        Width = viewPortSize.y;
+        MyGame->GetCamera()->SetAspectRatio(static_cast<float>(Height) / Width);
     }
 
     event.Skip();

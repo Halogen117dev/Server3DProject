@@ -17,7 +17,7 @@ public:
 	bool InitOGLFunctions();
 	bool InitOGL();
 
-	bool Render(std::vector<std::shared_ptr<Model>> &ModelList);
+	bool Render(std::vector<std::shared_ptr<Model>> &ModelList, std::shared_ptr<Camera> camera);
 
 	void SetBGColor(glm::vec3 bgColor);
 

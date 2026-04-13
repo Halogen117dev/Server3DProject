@@ -8,7 +8,7 @@ MainFrame::MainFrame(const wxString& title)
 
     wxGLAttributes vAttrs;
     vAttrs.PlatformDefaults().Defaults().EndList();
-
+    this->SetSize(500, 400);
     if (wxGLCanvas::IsDisplaySupported(vAttrs))
     {
         

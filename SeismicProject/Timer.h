@@ -6,6 +6,7 @@ class Timer
 public:
 	Timer();
 	int DT();
+	int GetTime();
 
 private:
 	std::chrono::high_resolution_clock::time_point PresentTime;

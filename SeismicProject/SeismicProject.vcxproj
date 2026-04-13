@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CurlHandler.cpp" />
     <ClCompile Include="DefaultShader.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -172,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CurlHandler.h" />
     <ClInclude Include="DefaultShader.h" />
     <ClInclude Include="dependencies\include\glad\glad.h" />

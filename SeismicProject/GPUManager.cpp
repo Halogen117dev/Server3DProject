@@ -69,7 +69,7 @@ bool GPUManager::InitOGL()
 }
 
 
-bool GPUManager::Render(std::vector<std::shared_ptr<Model>> &ModelList)
+bool GPUManager::Render(std::vector<std::shared_ptr<Model>> &ModelList, std::shared_ptr<Camera> camera)
 {
     //wxLogDebug("TS RENDERIN");
     
@@ -79,7 +79,7 @@ bool GPUManager::Render(std::vector<std::shared_ptr<Model>> &ModelList)
     
     for (int i = 0; i < ModelList.size(); i++)
     {
-        ModelList[i]->Render();
+        ModelList[i]->Render(camera);
     }
     return true;
 }

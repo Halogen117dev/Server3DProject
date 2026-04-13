@@ -2,13 +2,22 @@
 
 Model::Model()
 {	
+    ModelMatrix = glm::mat4(1.0f);
+
+    //Transformation tutorial
+    ModelMatrix = glm::translate(ModelMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
+    ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    ModelMatrix = glm::scale(ModelMatrix, glm::vec3(1.0f));
+
     Mesh::Vertex quadVertices[]
     {
         //Vertex Positions                          //Texture Coords
-        glm::vec3(- 0.5f, -0.5f, 0.5f),             glm::vec2(0.0f, 0.0f),
-        glm::vec3(0.5f, -0.5f, 0.5f),               glm::vec2(1.0f, 0.0f),
-        glm::vec3(0.5f, 0.5f, 0.5f),                glm::vec2(1.0f, 1.0f),
-        glm::vec3(-0.5f, 0.5f, 0.5f),               glm::vec2(0.0f, 1.0f)
+        glm::vec3(- 0.5f, -0.5f, 0.0f),             glm::vec2(0.0f, 0.0f),
+        glm::vec3(0.5f, -0.5f, 0.0f),               glm::vec2(1.0f, 0.0f),
+        glm::vec3(0.5f, 0.5f, 0.0f),                glm::vec2(1.0f, 1.0f),
+        glm::vec3(-0.5f, 0.5f, 0.0f),               glm::vec2(0.0f, 1.0f)
     };
     GLuint quadIndices[]
     {
@@ -45,18 +54,35 @@ void setTextureUniform(GLuint shaderProgramHandle, GLuint textureNumber, const c
     glBindTexture(GL_TEXTURE_2D, textureHandle);
 }
 
-void Model::Render()
+void Model::Render(std::shared_ptr<Camera> camera)
 {
     for (int i = 0; i < Meshes.size(); i++)
     {
         glUseProgram(shaderProgram->GetHandle());
         
+        //TEXTURE UNIFORMS
         for (GLuint i = 0; i < Textures.size(); i++)
         {
             std::string textureName = "texture" + std::to_string(i);
             setTextureUniform(shaderProgram->GetHandle(), i, textureName.c_str(), Textures[i]->GetHandle());
         }
-        
+
+
+        //TESTING
+        ModelMatrix = glm::translate(ModelMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
+        ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+        ModelMatrix = glm::scale(ModelMatrix, glm::vec3(1.0f));
+        //TESTING
+
+        //MODEL MATRIX UNIFORM
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram->GetHandle(), "ModelMatrix"), 1, GL_FALSE, glm::value_ptr(ModelMatrix));
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram->GetHandle(), "ViewMatrix"), 1, GL_FALSE, glm::value_ptr(camera->GetViewMatrix()));
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram->GetHandle(), "ProjectionMatrix"), 1, GL_FALSE, glm::value_ptr(camera->GetProjectionMatrix()));
+
+
+
         glBindVertexArray(Meshes[i]->GetVAO());
         if (Meshes[i]->GetIsIndexed())
         {

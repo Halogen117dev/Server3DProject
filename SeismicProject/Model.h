@@ -2,6 +2,7 @@
 
 #include<memory>
 
+#include"Camera.h"
 #include"Mesh.h"
 #include"Texture.h"
 #include"ShaderProgram.h"
@@ -25,7 +26,7 @@ private:
 	//THIS ALLOWS ONLY THE GPU MANAGER TO USE THE RENDER FUNCTION.
 	//HOWEVER, PROBLEM ARISES AS GPU MANAGER CAN ALSO NOW ACCESS OTHER PRIVATE MEMBERS.
 	friend class GPUManager;
-	void Render();
+	void Render(std::shared_ptr<Camera> camera);
 private:
 	std::unique_ptr<ShaderProgram> shaderProgram;
 	std::vector<std::unique_ptr<Texture>> Textures;
@@ -33,8 +34,9 @@ private:
 
 private:
 	glm::mat4 ModelMatrix;
-	glm::mat4 TranslationMatrix;
-	glm::mat4 RotationMatrix;
-	glm::mat4 ScaleMatrix;	   
+
+	//temporary REMOVED NOW AHAHAHHAHA
+	//glm::mat4 ViewMatrix;
+	//glm::mat4 ProjectionMatrix;
 };
 

@@ -21,11 +21,15 @@ public:
 
     CurlHandler* ParentCurlHandler;
 private:
+    int
+        Height,
+        Width;
 
     glm::vec3 BGColor;
 
     wxGLContext* OGLContext;
     GameManager* MyGame;
     GPUManager* MyGPU;
+    Timer* MyTimer;
 };
 

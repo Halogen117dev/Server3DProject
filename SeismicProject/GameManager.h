@@ -22,9 +22,11 @@ public:
 	//
 	//Making it return a reference to the list instead of a copy.
 	std::vector<std::shared_ptr<Model>>& GetModelList();
+	std::shared_ptr<Camera>& GetCamera();
 
 
 private:
 	std::vector<std::shared_ptr<Model>> ModelList;
+	std::shared_ptr<Camera> MainCamera;
 };
 
