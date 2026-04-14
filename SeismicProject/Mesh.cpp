@@ -76,11 +76,15 @@ void Mesh::CreateVertexData()
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, Indices.size() * sizeof(GLuint), Indices.data(), GL_STATIC_DRAW);
 
         //Link attributes (set pointers)
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+        //POSITION
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
         glEnableVertexAttribArray(0);   //layout = 0 in vertex shader
-
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3*sizeof(GLfloat)));
+        //NORMAL
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
         glEnableVertexAttribArray(1);   //layout = 1 in vertex shader
+        //UV COORDINATES
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, UVCoord));
+        glEnableVertexAttribArray(2);   //layout = 2 in vertex shader
 
         //unbind all the stuff. Apparently, we won't be needing VBO/EBO from now on,
         //so might aswell get rid of them later.

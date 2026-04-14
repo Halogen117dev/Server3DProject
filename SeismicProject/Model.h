@@ -15,13 +15,6 @@ public:
 	Model();
 	~Model();
 
-	void Transform(
-		glm::vec3 translation		= glm::vec3(0.0f),
-		glm::vec3 scale				= glm::vec3(1.0f),
-		glm::vec3 rotation			= glm::vec3(0.0f),
-		glm::vec3 rotationOffset	= glm::vec3(0.0f)
-	);
-
 private:
 	//THIS ALLOWS ONLY THE GPU MANAGER TO USE THE RENDER FUNCTION.
 	//HOWEVER, PROBLEM ARISES AS GPU MANAGER CAN ALSO NOW ACCESS OTHER PRIVATE MEMBERS.
@@ -35,8 +28,32 @@ private:
 private:
 	glm::mat4 ModelMatrix;
 
+	glm::vec3 Position;
+	glm::vec3 Rotation;
+	glm::vec3 Scale;
+
+	void TransformMatrix(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca);
+
 	//temporary REMOVED NOW AHAHAHHAHA
 	//glm::mat4 ViewMatrix;
 	//glm::mat4 ProjectionMatrix;
+
+private:
+	//Uniform setting functions
+	void SetTextureUniform(
+		GLuint textureNumber, 
+		const char* uniformName, 
+		GLuint textureHandle);
+
+	void SetMat4Uniform(
+		const char* uniformName,
+		glm::mat4 matrix,
+		GLboolean transpose = false
+		);
+
+	void SetVec3Uniform(
+		const char* uniformName,
+		glm::vec3 vector
+	);
 };
 

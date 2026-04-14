@@ -3,21 +3,25 @@
 Model::Model()
 {	
     ModelMatrix = glm::mat4(1.0f);
+    Position = glm::vec3(0.0f);
+    Rotation = glm::vec3(0.0f);
+    Scale = glm::vec3(1.0f);
 
     //Transformation tutorial
-    ModelMatrix = glm::translate(ModelMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
+    //I GUESS I CAN REMOVE TS
+    /*ModelMatrix = glm::translate(ModelMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
     ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    ModelMatrix = glm::scale(ModelMatrix, glm::vec3(1.0f));
+    ModelMatrix = glm::scale(ModelMatrix, glm::vec3(1.0f));*/
 
     Mesh::Vertex quadVertices[]
     {
-        //Vertex Positions                          //Texture Coords
-        glm::vec3(- 0.5f, -0.5f, 0.0f),             glm::vec2(0.0f, 0.0f),
-        glm::vec3(0.5f, -0.5f, 0.0f),               glm::vec2(1.0f, 0.0f),
-        glm::vec3(0.5f, 0.5f, 0.0f),                glm::vec2(1.0f, 1.0f),
-        glm::vec3(-0.5f, 0.5f, 0.0f),               glm::vec2(0.0f, 1.0f)
+        //Vertex Positions                  //Normals Positions                 //Texture Coords
+        glm::vec3(-0.5f, -0.5f, 0.0f),      glm::vec3(0.0f, 0.0f, 1.0f),        glm::vec2(0.0f, 0.0f),
+        glm::vec3(0.5f, -0.5f, 0.0f),       glm::vec3(0.0f, 0.0f, 1.0f),        glm::vec2(1.0f, 0.0f),
+        glm::vec3(0.5f, 0.5f, 0.0f),        glm::vec3(0.0f, 0.0f, 1.0f),        glm::vec2(1.0f, 1.0f),
+        glm::vec3(-0.5f, 0.5f, 0.0f),       glm::vec3(0.0f, 0.0f, 1.0f),        glm::vec2(0.0f, 1.0f)
     };
     GLuint quadIndices[]
     {
@@ -30,7 +34,7 @@ Model::Model()
     //mesh = std::make_unique<Mesh>(vertices, 9);
     //mesh = std::make_unique<Mesh>(quadVertices, 12, quadIndices, 6);
 
-    Textures.push_back(std::make_unique<Texture>("resources/images/master_chief.png"));
+    Textures.push_back(std::make_unique<Texture>("resources/images/computer.png"));
     Textures.push_back(std::make_unique<Texture>("resources/images/bird.png"));
 
     shaderProgram = std::make_unique<ShaderProgram>();
@@ -64,22 +68,42 @@ void Model::Render(std::shared_ptr<Camera> camera)
         for (GLuint i = 0; i < Textures.size(); i++)
         {
             std::string textureName = "texture" + std::to_string(i);
-            setTextureUniform(shaderProgram->GetHandle(), i, textureName.c_str(), Textures[i]->GetHandle());
+            SetTextureUniform(i, textureName.c_str(), Textures[i]->GetHandle());
+            //setTextureUniform(shaderProgram->GetHandle(), i, textureName.c_str(), Textures[i]->GetHandle());
         }
 
 
-        //TESTING
-        ModelMatrix = glm::translate(ModelMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
-        ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-        ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-        ModelMatrix = glm::scale(ModelMatrix, glm::vec3(1.0f));
-        //TESTING
+        //CHANGE POS ROT SCA DEPENDING ON SOME BS I GUESS LOL
+        //Position.z -= 0.0001f;
+        Rotation.y += 0.05f;
+
+        //MODEL MATRIX CALCULATIONS
+        ModelMatrix = glm::mat4(1.0f);
+        //ModelMatrix = glm::translate(ModelMatrix, Position);
+        //ModelMatrix = glm::rotate(ModelMatrix, glm::radians(Rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+        //ModelMatrix = glm::rotate(ModelMatrix, glm::radians(Rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+        //ModelMatrix = glm::rotate(ModelMatrix, glm::radians(Rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+        //ModelMatrix = glm::scale(ModelMatrix, Scale);
+        TransformMatrix(Position, Rotation, Scale);
+
+        //TransformMatrix(glm::vec3(0.0f, 0.5f, 0.0f), glm::vec3(45.0f), glm::vec3(1.f));
+
+        //MODEL MATRIX CALCULATIONS
+
+
+        //TESTING LIGHT STUFF
+        glm::vec3 lightPos(0.0f, 0.0f, 5.0f);
+        glm::vec3 cameraPos(0.0f, 0.0f, 1.0f);
+
 
         //MODEL MATRIX UNIFORM
-        glUniformMatrix4fv(glGetUniformLocation(shaderProgram->GetHandle(), "ModelMatrix"), 1, GL_FALSE, glm::value_ptr(ModelMatrix));
-        glUniformMatrix4fv(glGetUniformLocation(shaderProgram->GetHandle(), "ViewMatrix"), 1, GL_FALSE, glm::value_ptr(camera->GetViewMatrix()));
-        glUniformMatrix4fv(glGetUniformLocation(shaderProgram->GetHandle(), "ProjectionMatrix"), 1, GL_FALSE, glm::value_ptr(camera->GetProjectionMatrix()));
+        SetMat4Uniform("ModelMatrix", ModelMatrix, GL_FALSE);
+        SetMat4Uniform("ViewMatrix", camera->GetViewMatrix(), GL_FALSE);
+        SetMat4Uniform("ProjectionMatrix", camera->GetProjectionMatrix(), GL_FALSE);
+
+        SetVec3Uniform("lightPos", lightPos);
+        SetVec3Uniform("cameraPos", cameraPos);
+
 
 
 
@@ -98,4 +122,53 @@ void Model::Render(std::shared_ptr<Camera> camera)
         glActiveTexture(0);
         glBindTexture(GL_TEXTURE_2D, 0); 
     }      
+}
+
+void Model::TransformMatrix(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
+{
+    ModelMatrix = glm::translate(ModelMatrix, pos);
+    ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rot.x), glm::vec3(1.0f, 0.0f, 0.0f));
+    ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rot.y), glm::vec3(0.0f, 1.0f, 0.0f));
+    ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rot.z), glm::vec3(0.0f, 0.0f, 1.0f));
+    ModelMatrix = glm::scale(ModelMatrix, sca);
+}
+
+void Model::SetTextureUniform
+(
+    GLuint textureNumber, 
+    const char* uniformName, 
+    GLuint textureHandle
+)
+{
+    glUniform1i(
+        glGetUniformLocation(shaderProgram->GetHandle(), uniformName), 
+        textureNumber
+    );
+
+    glActiveTexture(GL_TEXTURE0 + textureNumber);
+    glBindTexture(GL_TEXTURE_2D, textureHandle);
+}
+
+void Model::SetMat4Uniform
+(
+    const char* uniformName, 
+    glm::mat4 matrix,
+    GLboolean transpose
+)
+{
+    glUniformMatrix4fv(
+        glGetUniformLocation(shaderProgram->GetHandle(), uniformName), 
+        1, 
+        transpose, 
+        glm::value_ptr(matrix)
+    );
+}
+
+void Model::SetVec3Uniform(const char* uniformName, glm::vec3 vector)
+{
+    glUniform3fv(
+        glGetUniformLocation(shaderProgram->GetHandle(), uniformName),
+        1,
+        glm::value_ptr(vector)
+    );
 }

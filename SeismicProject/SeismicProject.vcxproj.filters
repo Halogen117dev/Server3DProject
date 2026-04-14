@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Loader">
       <UniqueIdentifier>{b6d8f311-b17e-4215-8c83-b2282bd6b872}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scene Objects">
+      <UniqueIdentifier>{e39bdfb6-2ec3-47cb-aee1-53377834e5de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene Objects">
+      <UniqueIdentifier>{208503e8-120e-4556-bfca-a30c021ffd50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="deprecatedMainFrame.cpp">
