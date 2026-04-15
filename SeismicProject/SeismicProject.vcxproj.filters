@@ -37,10 +37,10 @@
     <Filter Include="Source Files\Loader">
       <UniqueIdentifier>{b6d8f311-b17e-4215-8c83-b2282bd6b872}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Scene Objects">
+    <Filter Include="Header Files\Scene">
       <UniqueIdentifier>{e39bdfb6-2ec3-47cb-aee1-53377834e5de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Scene Objects">
+    <Filter Include="Source Files\Scene">
       <UniqueIdentifier>{208503e8-120e-4556-bfca-a30c021ffd50}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -98,6 +98,12 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +163,12 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -15,10 +15,12 @@ public:
 	Model();
 	~Model();
 
-private:
+	//CHANGE IN RENDER METHOD - NOW IT IS PUBLIC!
+	//RENDER CALLS FOR EVERYONE!
+public:
 	//THIS ALLOWS ONLY THE GPU MANAGER TO USE THE RENDER FUNCTION.
 	//HOWEVER, PROBLEM ARISES AS GPU MANAGER CAN ALSO NOW ACCESS OTHER PRIVATE MEMBERS.
-	friend class GPUManager;
+	//friend class GPUManager;
 	void Render(
 		std::shared_ptr<Camera> camera, 
 		glm::vec3 pos = glm::vec3(0.0f),
