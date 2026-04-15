@@ -20,7 +20,7 @@ public:
 	//Currently, this function takes a shared_ptr to a shader, this must be
 	//changed to taking a const char* to a filename containing a shader.
 	//This will allow us to change the Shaders vector from shared_ptr to a
-	// unique_ptr, increasing performance by 0.1ms because that's just sooo
+	//unique_ptr, increasing performance by 0.1ms because that's just sooo
 	//significant, isn't it?
 	void AddShader(std::shared_ptr<DefaultShader> shader);
 

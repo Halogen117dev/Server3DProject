@@ -58,7 +58,12 @@ void setTextureUniform(GLuint shaderProgramHandle, GLuint textureNumber, const c
     glBindTexture(GL_TEXTURE_2D, textureHandle);
 }
 
-void Model::Render(std::shared_ptr<Camera> camera)
+void Model::Render(
+    std::shared_ptr<Camera> camera,
+    glm::vec3 pos,
+    glm::vec3 rot,
+    glm::vec3 sca
+)
 {
     for (int i = 0; i < Meshes.size(); i++)
     {
@@ -75,7 +80,7 @@ void Model::Render(std::shared_ptr<Camera> camera)
 
         //CHANGE POS ROT SCA DEPENDING ON SOME BS I GUESS LOL
         //Position.z -= 0.0001f;
-        Rotation.y += 0.05f;
+        //Rotation.y += 0.05f;
 
         //MODEL MATRIX CALCULATIONS
         ModelMatrix = glm::mat4(1.0f);
@@ -86,10 +91,10 @@ void Model::Render(std::shared_ptr<Camera> camera)
         //ModelMatrix = glm::scale(ModelMatrix, Scale);
         TransformMatrix(Position, Rotation, Scale);
 
-        //TransformMatrix(glm::vec3(0.0f, 0.5f, 0.0f), glm::vec3(45.0f), glm::vec3(1.f));
+        //External transformations
+        TransformMatrix(pos, rot,sca);
 
-        //MODEL MATRIX CALCULATIONS
-
+        
 
         //TESTING LIGHT STUFF
         glm::vec3 lightPos(0.0f, 0.0f, 5.0f);
@@ -103,8 +108,6 @@ void Model::Render(std::shared_ptr<Camera> camera)
 
         SetVec3Uniform("lightPos", lightPos);
         SetVec3Uniform("cameraPos", cameraPos);
-
-
 
 
         glBindVertexArray(Meshes[i]->GetVAO());
@@ -132,6 +135,13 @@ void Model::TransformMatrix(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
     ModelMatrix = glm::rotate(ModelMatrix, glm::radians(rot.z), glm::vec3(0.0f, 0.0f, 1.0f));
     ModelMatrix = glm::scale(ModelMatrix, sca);
 }
+
+void Model::TransformMatrix(glm::mat4 transformMatrix)
+{
+    
+}
+
+
 
 void Model::SetTextureUniform
 (
