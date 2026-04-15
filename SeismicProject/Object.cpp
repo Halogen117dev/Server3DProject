@@ -1,16 +1,16 @@
 #include "Object.h"
 
-Object::Object(
-	glm::vec3 pos = glm::vec3(0.0f),
-	glm::vec3 rot = glm::vec3(0.0f),
-	glm::vec3 sca = glm::vec3(1.0f)
-)
-	:
-	Position(pos),
-	Rotation(rot),
-	Scale(sca)
+
+
+Object::Object(const char* name, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
 {
+	ID = name;
+	Position = pos;
+	Rotation = rot;
+	Scale = sca;
 	Type = Node::NodeType::OBJECT;
+
+	AttachModel();
 }
 
 Object::~Object()
@@ -21,7 +21,7 @@ void Object::Render(std::shared_ptr<Camera> camera, glm::vec3 pos, glm::vec3 rot
 {
 	glm::vec3 finalPos = Position + pos;
 	glm::vec3 finalRot = Rotation + rot;
-	glm::vec3 finalSca = Scale + sca;
+	glm::vec3 finalSca = Scale * sca;
 
 	if (MyModel)
 		MyModel->Render(camera, finalPos, finalRot, finalSca);
@@ -38,4 +38,18 @@ void Object::AttachModel()
 	{
 		MyModel = std::make_unique<Model>();
 	}
+}
+
+void Object::SetTransform(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
+{
+	Position = pos;
+	Rotation = rot;
+	Scale = sca;
+}
+
+void Object::Transform(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
+{
+	Position += pos;
+	Rotation += rot;
+	Scale *= sca;
 }

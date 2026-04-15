@@ -105,7 +105,7 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     MyGame->Update();
 
     MyGPU->SetBGColor(BGColor);
-    MyGPU->Render(MyGame->GetModelList(), MyGame->GetCamera());
+    MyGPU->Render(MyGame->GetCamera(), MyGame->GetMainNode());
 
     SwapBuffers();
 }

@@ -2,7 +2,7 @@
 
 #include"Model.h"
 
-class Object;
+#include<string>
 
 class Node
 {
@@ -15,6 +15,7 @@ public:
 	};
 public:
 	Node();
+	Node(const char* name);
 	~Node();
 
 	virtual void Render(
@@ -31,8 +32,14 @@ public:
 
 	std::vector<std::shared_ptr<Node>>& GetChildrenList();
 
+	std::string GetID();
+	void SetID(const char* id);
 protected:
+	//For derived classes
+	Node(const char* name, NodeType type);
+
 	enum NodeType Type;
+	std::string ID;
 	
 	std::vector<std::shared_ptr<Node>> ChildrenList;
 };

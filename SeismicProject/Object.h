@@ -5,6 +5,7 @@ class Object : public Node
 {
 public:
 	Object(
+		const char* name,
 		glm::vec3 pos = glm::vec3(0.0f),
 		glm::vec3 rot = glm::vec3(0.0f),
 		glm::vec3 sca = glm::vec3(1.0f)
@@ -20,6 +21,17 @@ public:
 
 	void AttachModel();
 
+	void SetTransform(
+		glm::vec3 pos = glm::vec3(0.0f),
+		glm::vec3 rot = glm::vec3(0.0f),
+		glm::vec3 sca = glm::vec3(1.0f)
+	);
+
+	void Transform(
+		glm::vec3 pos = glm::vec3(0.0f),
+		glm::vec3 rot = glm::vec3(0.0f),
+		glm::vec3 sca = glm::vec3(1.0f)
+	);
 private:
 	glm::vec3 Position;
 	glm::vec3 Rotation;

@@ -6,7 +6,8 @@
 #include<vector>
 #include<memory>
 
-#include "Model.h"
+#include "Node.h"
+#include"Object.h"
 
 class GPUManager
 {
@@ -17,7 +18,7 @@ public:
 	bool InitOGLFunctions();
 	bool InitOGL();
 
-	bool Render(std::vector<std::shared_ptr<Model>> &ModelList, std::shared_ptr<Camera> camera);
+	bool Render(std::shared_ptr<Camera> camera, std::shared_ptr<Node> mainNode);
 
 	void SetBGColor(glm::vec3 bgColor);
 

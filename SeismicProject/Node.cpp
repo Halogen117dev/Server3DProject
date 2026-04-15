@@ -2,7 +2,20 @@
 
 Node::Node()
 {
+	ID = "Untitled Node";
 	Type = Node::NodeType::NODE;
+}
+
+Node::Node(const char* name)
+{
+	ID = name;
+	Type = Node::NodeType::NODE;
+}
+
+Node::Node(const char* name, NodeType type)
+{
+	ID = name;
+	Type = type;
 }
 
 Node::~Node()
@@ -20,7 +33,11 @@ void Node::Render(std::shared_ptr<Camera> camera, glm::vec3 pos, glm::vec3 rot, 
 
 void Node::Update()
 {
-
+	//do update stuff
+	for (int i = 0; i < ChildrenList.size(); i++)
+	{
+		ChildrenList[i]->Update();
+	}
 }
 
 void Node::AddChild()
@@ -37,3 +54,15 @@ std::vector<std::shared_ptr<Node>>& Node::GetChildrenList()
 {
 	return ChildrenList;
 }
+
+std::string Node::GetID()
+{
+	return ID;
+}
+
+void Node::SetID(const char* id)
+{
+	ID = id;
+}
+
+

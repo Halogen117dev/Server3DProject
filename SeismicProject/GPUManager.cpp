@@ -68,19 +68,12 @@ bool GPUManager::InitOGL()
     return true;
 }
 
-
-bool GPUManager::Render(std::vector<std::shared_ptr<Model>> &ModelList, std::shared_ptr<Camera> camera)
+bool GPUManager::Render(std::shared_ptr<Camera> camera, std::shared_ptr<Node> mainNode)
 {
-    //wxLogDebug("TS RENDERIN");
-    
-    
     glClearColor(BGColor.r, BGColor.g, BGColor.b, BGColor.a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-    
-    for (int i = 0; i < ModelList.size(); i++)
-    {
-        ModelList[i]->Render(camera);
-    }
+
+    mainNode->Render(camera);
     return true;
 }
 
