@@ -4,6 +4,6 @@
 class VertexShader : public DefaultShader
 {
 public:
-	VertexShader();
+	VertexShader(const char* shaderSource);
 };
 

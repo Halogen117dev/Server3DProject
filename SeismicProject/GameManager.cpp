@@ -14,7 +14,7 @@ GameManager::~GameManager()
 }
 
 void GameManager::Update()
-{
+{	
 	std::shared_ptr<Object> obj1 = std::dynamic_pointer_cast<Object>(MainNode->GetChildrenList()[0]);
 	rotation1.y = 0.00001f;
 	obj1->Transform(rotation1, glm::vec3(0.0f), glm::vec3(1.0f));

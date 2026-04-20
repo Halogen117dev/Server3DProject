@@ -38,8 +38,8 @@ Model::Model()
     Textures.push_back(std::make_unique<Texture>("resources/images/bird.png"));
 
     shaderProgram = std::make_unique<ShaderProgram>();
-    shaderProgram->AddShader(std::make_shared<VertexShader>());
-    shaderProgram->AddShader(std::make_shared<FragmentShader>());
+    shaderProgram->AddShader(std::make_shared<VertexShader>("Vertex.vert"));
+    shaderProgram->AddShader(std::make_shared<FragmentShader>("Fragment.frag"));
     shaderProgram->AttachAndLink();
 }
 
@@ -109,7 +109,7 @@ void Model::Render(
         SetVec3Uniform("lightPos", lightPos);
         SetVec3Uniform("cameraPos", cameraPos);
 
-
+        
         glBindVertexArray(Meshes[i]->GetVAO());
         if (Meshes[i]->GetIsIndexed())
         {

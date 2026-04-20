@@ -53,3 +53,33 @@ void Object::Transform(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
 	Rotation += rot;
 	Scale *= sca;
 }
+
+void Object::SetPosition(glm::vec3 pos)
+{
+	Position = pos;
+}
+
+void Object::SetRotation(glm::vec3 rot)
+{
+	Rotation = rot;
+}
+
+void Object::SetScale(glm::vec3 sca)
+{
+	Scale = sca;
+}
+
+void Object::Translate(glm::vec3 translationVal)
+{
+	Position += translationVal;
+}
+
+void Object::Rotate(glm::vec3 rotationVal)
+{
+	Rotation += rotationVal;
+}
+
+void Object::ScaleMult(glm::vec3 scaleVal)
+{
+	Scale *= scaleVal;
+}

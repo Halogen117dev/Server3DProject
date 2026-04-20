@@ -114,6 +114,10 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 //WORKS FOR NEW IMPLEMENTATION TOO!
 void OGLCanvas::OnIdle(wxIdleEvent& event)
 {
+    if (wxGetKeyState((wxKeyCode)'A'))
+    {
+
+    }
     Refresh();
 
     event.Skip();

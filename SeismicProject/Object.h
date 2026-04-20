@@ -32,6 +32,15 @@ public:
 		glm::vec3 rot = glm::vec3(0.0f),
 		glm::vec3 sca = glm::vec3(1.0f)
 	);
+
+	void SetPosition(glm::vec3 pos);
+	void SetRotation(glm::vec3 rot);
+	void SetScale(glm::vec3 sca);
+
+	void Translate(glm::vec3 translationVal);
+	void Rotate(glm::vec3 rotationVal);
+	void ScaleMult(glm::vec3 scaleVal);
+
 private:
 	glm::vec3 Position;
 	glm::vec3 Rotation;

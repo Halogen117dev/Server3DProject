@@ -160,6 +160,7 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="deprecatedMainFrame.cpp" />
     <ClCompile Include="GPUManager.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="deprecatedMainFrame.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GPUManager.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />

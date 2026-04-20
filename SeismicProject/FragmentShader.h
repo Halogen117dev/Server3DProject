@@ -4,6 +4,6 @@
 class FragmentShader : public DefaultShader
 {
 public:
-	FragmentShader();
+	FragmentShader(const char* shaderSource);
 };
 
