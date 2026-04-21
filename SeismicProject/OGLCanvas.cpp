@@ -17,6 +17,7 @@ OGLCanvas::OGLCanvas(MainFrame* parent, const wxGLAttributes& canvasAttrs)
     //Other Stuff
 
     ParentCurlHandler = parent->MyCurlHandler;
+    MyInput = new Input();
 
     wxGLContextAttrs ctxAttrs;
     ctxAttrs.PlatformDefaults().CoreProfile().OGLVersion(4, 6).EndList();
@@ -49,6 +50,7 @@ OGLCanvas::~OGLCanvas()
     delete MyGPU;
     delete MyGame;
     delete MyTimer;
+    delete MyInput;
 }
 
 
@@ -102,7 +104,7 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     int dt = MyTimer->DT();
     int t = MyTimer->GetTime();
     //GameManager->Update stuff
-    MyGame->Update();
+    MyGame->Update(*MyInput);
 
     MyGPU->SetBGColor(BGColor);
     MyGPU->Render(MyGame->GetCamera(), MyGame->GetMainNode());
@@ -114,10 +116,7 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 //WORKS FOR NEW IMPLEMENTATION TOO!
 void OGLCanvas::OnIdle(wxIdleEvent& event)
 {
-    if (wxGetKeyState((wxKeyCode)'A'))
-    {
-
-    }
+    MyInput->Update(event);
     Refresh();
 
     event.Skip();

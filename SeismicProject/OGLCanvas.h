@@ -31,5 +31,6 @@ private:
     GameManager* MyGame;
     GPUManager* MyGPU;
     Timer* MyTimer;
+    Input* MyInput;
 };
 

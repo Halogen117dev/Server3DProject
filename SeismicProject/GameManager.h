@@ -3,6 +3,7 @@
 
 #include"Node.h"
 #include"Object.h"
+#include"Input.h"
 
 #include<vector>
 #include<memory>
@@ -14,7 +15,7 @@ public:
 	~GameManager();
 
 	//
-	void Update();
+	void Update(Input& input);
 
 	//Returns the vector filled with every single model in the program
 	//Right now, it just returns whatever the actual ModelList vector is
