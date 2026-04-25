@@ -5,6 +5,7 @@ GameManager::GameManager()
 {
 	MainNode = std::make_shared<Node>("MainNode");
 	MainNode->AddChild(std::make_shared<Object>("Obj1"));
+	MainNode->AddChild(std::make_shared<Object>("Obj2"));
 	MainCamera = std::make_shared<Camera>();
 }
 
@@ -32,8 +33,16 @@ void GameManager::Update(Input& input)
 	{
 		translation += glm::vec3(1.0f, 0.0f, 0.0f);
 	}
+	if (input.IsKeyPressed("R"))
+	{
+		translation += glm::vec3(0.0f, 1.0f, 0.0f);
+	}
+	if (input.IsKeyPressed("F"))
+	{
+		translation += glm::vec3(0.0f, -1.0f, 0.0f);
+	}
 	//translation = glm::normalize(translation);
-	GLfloat speed = 0.001f;
+	GLfloat speed = 0.0005f;
 	translation = glm::vec3(translation.x * speed, translation.y * speed, translation.z * speed);
 	obj1->Translate(translation);
 
@@ -47,7 +56,7 @@ void GameManager::Update(Input& input)
 		rotation += glm::vec3(0.0f, -1.0f, 0.0f);
 	}
 	//translation = glm::normalize(translation);
-	GLfloat rotSpeed = 0.02f;
+	GLfloat rotSpeed = 0.05f;
 	rotation = glm::vec3(rotation.x * rotSpeed, rotation.y * rotSpeed, rotation.z * rotSpeed);
 	obj1->Rotate(rotation);
 }

@@ -15,7 +15,7 @@ Model::Model()
     ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
     ModelMatrix = glm::scale(ModelMatrix, glm::vec3(1.0f));*/
 
-    Mesh::Vertex quadVertices[]
+    Vertex quadVertices[]
     {
         //Vertex Positions                  //Normals Positions                 //Texture Coords
         glm::vec3(-0.5f, -0.5f, 0.0f),      glm::vec3(0.0f, 0.0f, 1.0f),        glm::vec2(0.0f, 0.0f),
@@ -29,18 +29,34 @@ Model::Model()
         0, 2, 3
     };
 
-    //Meshes.push_back(std::make_unique<Mesh>(vertices, 9));
-    Meshes.push_back(std::make_unique<Mesh>(quadVertices, 4, quadIndices, 6));
+    
+    //Meshes.push_back(std::make_unique<Mesh>(quadVertices, 4, quadIndices, 6));
+    
+    OBJLoader* objLoader = new OBJLoader();
+    objLoader->LoadModel("resources/models/HP_Z8.obj");
+    std::vector<Vertex> vertices = objLoader->GetVertices();
+    Meshes.push_back(std::make_unique<Mesh>(vertices.data(), vertices.size()));
+
+    //std::vector<GLuint> indices = objLoader->GetIndices();
+    //Meshes.push_back(std::make_unique<Mesh>(vertices.data(), vertices.size(), indices.data(), indices.size()));
+
     //mesh = std::make_unique<Mesh>(vertices, 9);
     //mesh = std::make_unique<Mesh>(quadVertices, 12, quadIndices, 6);
 
-    Textures.push_back(std::make_unique<Texture>("resources/images/computer.png"));
+    // WARNING
+    // I HAVE SWITCHED THE COLOR CHANNELS INSIDE TEXTURE CLASS CONSTRUCTOR TO ALLOW FOR THIS SHII
+    // CHANGE IT BACK
+
+    Textures.push_back(std::make_unique<Texture>("resources/images/HP_Z8_low_Export_Material_BaseColor_1k.png"));
+    //Textures.push_back(std::make_unique<Texture>("resources/images/computer.png"));
     Textures.push_back(std::make_unique<Texture>("resources/images/bird.png"));
 
     shaderProgram = std::make_unique<ShaderProgram>();
     shaderProgram->AddShader(std::make_shared<VertexShader>("Vertex.vert"));
     shaderProgram->AddShader(std::make_shared<FragmentShader>("Fragment.frag"));
     shaderProgram->AttachAndLink();
+
+    delete objLoader;
 }
 
 Model::~Model()
@@ -118,6 +134,7 @@ void Model::Render(
         else
         {
             //glDrawArrays(GL_TRIANGLES, 0, Meshes[i]->GetNumVertices()/GLuint(3));
+            glDrawArrays(GL_TRIANGLES, 0, Meshes[i]->GetNumVertices());
         }
 
         glBindVertexArray(0);

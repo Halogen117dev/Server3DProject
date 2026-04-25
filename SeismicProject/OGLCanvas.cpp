@@ -103,12 +103,16 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 
     int dt = MyTimer->DT();
     int t = MyTimer->GetTime();
-    //GameManager->Update stuff
-    MyGame->Update(*MyInput);
-
-    MyGPU->SetBGColor(BGColor);
-    MyGPU->Render(MyGame->GetCamera(), MyGame->GetMainNode());
-
+    
+    //MyGame->Update will be called even when the game isn't even made yet!
+    //FOUND THIS THROUGH THE OBJLoader's FILE.is_open THING
+    if (MyGame != nullptr)
+    {
+        MyGame->Update(*MyInput);
+        MyGPU->SetBGColor(BGColor);
+        MyGPU->Render(MyGame->GetCamera(), MyGame->GetMainNode());
+    }
+    
     SwapBuffers();
 }
 

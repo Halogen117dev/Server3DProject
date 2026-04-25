@@ -6,6 +6,7 @@
 #include"Mesh.h"
 #include"Texture.h"
 #include"ShaderProgram.h"
+#include"OBJLoader.h"
 
 class Model
 {

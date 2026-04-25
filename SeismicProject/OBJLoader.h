@@ -1,12 +1,10 @@
 #pragma once
 
+
 #include<glad/glad.h>
 
-#include<assimp/Importer.hpp>
-#include<assimp/scene.h>
-#include<assimp/postprocess.h>
+#include"Vertex.h"
 
-#include<iostream>
 #include<string>
 #include<fstream>
 #include<vector>
@@ -16,17 +14,26 @@
 
 //#include<assimp/config.h>
 
+//struct Vertex
+//{
+//	glm::vec3 Position;
+//	glm::vec3 Normal;
+//	glm::vec2 UVCoord;
+//};
+
 class OBJLoader
 {
 public:
 	OBJLoader();
 	~OBJLoader();
 
-private:
-	Assimp::Importer MyImporter;
-	std::unique_ptr<aiScene> MyScene;
-	std::unique_ptr<aiNode> RootNode;
+	std::vector<Vertex> GetVertices();
+	std::vector<GLuint> GetIndices();
 
-	std::vector<GLfloat> LoadModel(const char* modelPath);
+	void LoadModel(const char* modelPath);
+
+private:
+	std::vector<Vertex> OutVertices;
+	std::vector<GLuint> OutIndices;
 };
 

@@ -9,17 +9,14 @@
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
 
+#include"Vertex.h"
+
 #include<vector>
 
 class Mesh
 {
 public:
-	struct Vertex
-	{
-		glm::vec3 Position;
-		glm::vec3 Normal;
-		glm::vec2 UVCoord;
-	};
+	
 
 	//Mesh consists of vertices, parameters being said vertices
 	//and number of vertices.
