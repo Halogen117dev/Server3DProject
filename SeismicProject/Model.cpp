@@ -36,10 +36,10 @@ Model::Model()
     //Textures.push_back(std::make_unique<Texture>("resources/images/computer.png"));
     Textures.push_back(std::make_unique<Texture>("resources/images/bird.png"));
 
-    shaderProgram = std::make_unique<ShaderProgram>();
-    shaderProgram->AddShader(std::make_shared<VertexShader>("Vertex.vert"));
-    shaderProgram->AddShader(std::make_shared<FragmentShader>("Fragment.frag"));
-    shaderProgram->AttachAndLink();
+    MyShaderProgram = std::make_shared<ShaderProgram>();
+    MyShaderProgram->AddShader(std::make_shared<VertexShader>("Vertex.vert"));
+    MyShaderProgram->AddShader(std::make_shared<FragmentShader>("Fragment.frag"));
+    MyShaderProgram->AttachAndLink();
 
     delete objLoader;
 }
@@ -64,10 +64,10 @@ Model::Model(const char* modelPath)
     //Textures.push_back(std::make_unique<Texture>("resources/images/computer.png"));
     Textures.push_back(std::make_unique<Texture>("resources/images/bird.png"));
 
-    shaderProgram = std::make_unique<ShaderProgram>();
-    shaderProgram->AddShader(std::make_shared<VertexShader>("Vertex.vert"));
-    shaderProgram->AddShader(std::make_shared<FragmentShader>("Fragment.frag"));
-    shaderProgram->AttachAndLink();
+    MyShaderProgram = std::make_shared<ShaderProgram>();
+    MyShaderProgram->AddShader(std::make_shared<VertexShader>("Vertex.vert"));
+    MyShaderProgram->AddShader(std::make_shared<FragmentShader>("Fragment.frag"));
+    MyShaderProgram->AttachAndLink();
 
     delete objLoader;
 }
@@ -96,7 +96,7 @@ void Model::Render(
 {
     for (int i = 0; i < Meshes.size(); i++)
     {
-        glUseProgram(shaderProgram->GetHandle());
+        glUseProgram(MyShaderProgram->GetHandle());
         
         //TEXTURE UNIFORMS
         for (GLuint i = 0; i < Textures.size(); i++)
@@ -106,28 +106,16 @@ void Model::Render(
             //setTextureUniform(shaderProgram->GetHandle(), i, textureName.c_str(), Textures[i]->GetHandle());
         }
 
-
-        //CHANGE POS ROT SCA DEPENDING ON SOME BS I GUESS LOL
-        //Position.z -= 0.0001f;
-        //Rotation.y += 0.05f;
-
         //MODEL MATRIX CALCULATIONS
         ModelMatrix = glm::mat4(1.0f);
-        //ModelMatrix = glm::translate(ModelMatrix, Position);
-        //ModelMatrix = glm::rotate(ModelMatrix, glm::radians(Rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-        //ModelMatrix = glm::rotate(ModelMatrix, glm::radians(Rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-        //ModelMatrix = glm::rotate(ModelMatrix, glm::radians(Rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-        //ModelMatrix = glm::scale(ModelMatrix, Scale);
         TransformMatrix(Position, Rotation, Scale);
 
         //External transformations
-        TransformMatrix(pos, rot,sca);
-
-        
+        TransformMatrix(pos, rot,sca);        
 
         //TESTING LIGHT STUFF
-        glm::vec3 lightPos(0.0f, 0.0f, 5.0f);
-        glm::vec3 cameraPos(0.0f, 0.0f, 1.0f);
+        glm::vec3 lightPos(-3.0f, 2.0f, 2.0f);
+        glm::vec3 cameraPos = camera->GetPosition();
 
 
         //MODEL MATRIX UNIFORM
@@ -160,9 +148,9 @@ void Model::Render(
     }      
 }
 
-void Model::SetShaderProgram(std::unique_ptr<ShaderProgram> shaderProgram)
+void Model::SetShaderProgram(std::shared_ptr<ShaderProgram> shaderProgram)
 {
-
+    MyShaderProgram = shaderProgram;
 }
 
 void Model::TransformMatrix(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
@@ -189,7 +177,7 @@ void Model::SetTextureUniform
 )
 {
     glUniform1i(
-        glGetUniformLocation(shaderProgram->GetHandle(), uniformName), 
+        glGetUniformLocation(MyShaderProgram->GetHandle(), uniformName),
         textureNumber
     );
 
@@ -205,7 +193,7 @@ void Model::SetMat4Uniform
 )
 {
     glUniformMatrix4fv(
-        glGetUniformLocation(shaderProgram->GetHandle(), uniformName), 
+        glGetUniformLocation(MyShaderProgram->GetHandle(), uniformName),
         1, 
         transpose, 
         glm::value_ptr(matrix)
@@ -215,7 +203,7 @@ void Model::SetMat4Uniform
 void Model::SetVec3Uniform(const char* uniformName, glm::vec3 vector)
 {
     glUniform3fv(
-        glGetUniformLocation(shaderProgram->GetHandle(), uniformName),
+        glGetUniformLocation(MyShaderProgram->GetHandle(), uniformName),
         1,
         glm::value_ptr(vector)
     );
@@ -224,7 +212,7 @@ void Model::SetVec3Uniform(const char* uniformName, glm::vec3 vector)
 void Model::SetUintUniform(const char* uniformName, GLuint uint)
 {
     glUniform1ui(
-        glGetUniformLocation(shaderProgram->GetHandle(), uniformName),
+        glGetUniformLocation(MyShaderProgram->GetHandle(), uniformName),
         uint
     );
 }

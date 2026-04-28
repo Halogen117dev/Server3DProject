@@ -17,7 +17,7 @@ OGLCanvas::OGLCanvas(MainFrame* parent, const wxGLAttributes& canvasAttrs)
     //Other Stuff
 
     ParentCurlHandler = parent->MyCurlHandler;
-    Input = new InputManager();
+    Input = new InputManager(this);
 
     wxGLContextAttrs ctxAttrs;
     ctxAttrs.PlatformDefaults().CoreProfile().OGLVersion(4, 6).EndList();
@@ -124,10 +124,26 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 //WORKS FOR NEW IMPLEMENTATION TOO!
 void OGLCanvas::OnIdle(wxIdleEvent& event)
 {
+    wxPoint mousePos = ScreenToClient(wxGetMousePosition());
+    if ((mousePos.x > 0) && (mousePos.x < Width))
+    {
+        if ((mousePos.y > 0) && (mousePos.y < Height))
+        {
+            Input->SetMouseInClient(true);
+        }
+        else
+        {
+            Input->SetMouseInClient(false);
+        }
+    }
+    else
+    {
+        Input->SetMouseInClient(false);
+    }
     //std::string out = std::to_string(counter++);
     //out.push_back('\n');
     //OutputDebugStringA(out.c_str());
-
+    
     Input->Update(event);
     Refresh();
 
@@ -154,10 +170,15 @@ void OGLCanvas::OnSize(wxSizeEvent& event)
     {
         auto viewPortSize = event.GetSize();
         glViewport(0, 0, viewPortSize.x, viewPortSize.y);
-        Height = viewPortSize.x;
-        Width = viewPortSize.y;
-        MyGame->GetCamera()->SetAspectRatio(static_cast<float>(Height) / Width);
+        Height = viewPortSize.y;
+        Width = viewPortSize.x;
+        MyGame->GetCamera()->SetAspectRatio(static_cast<float>(Width) / Height);
     }
 
     event.Skip();
+}
+
+wxSize OGLCanvas::GetDimensions()
+{
+    return wxSize(Width, Height);
 }

@@ -3,11 +3,14 @@
 
 GameManager::GameManager(InputManager* input)
 {
+	dt = 1;
+	t = 1;
 	//MAIN NODE IS NEVER IN NODEMAP
 	MainNode = std::make_shared<Node>(this, "MainNode");
 	//MAIN NODE IS NEVER IN NODEMAP
 
 	Input = input;
+
 
 	std::shared_ptr<Object> obj1 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<Object>(this, "Obj1", "resources/models/HP_Z8.obj")));
 	std::shared_ptr<Object> obj2 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<Object>(this, "Obj2", "resources/models/HP_Z8.obj")));
@@ -16,9 +19,22 @@ GameManager::GameManager(InputManager* input)
 	std::shared_ptr<Object> obj5 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<Object>(this, "Obj5", "resources/models/HP_Z8.obj")));
 
 	std::shared_ptr<Object> floor = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<Object>(this, "Obj5", "resources/models/floor.obj")));
-	floor->Translate(glm::vec3(0.0f, -0.2f, 0.0f));
 
-	MainCamera = std::make_shared<Camera>();
+	floor->Translate(glm::vec3(-2.0f, -0.0f, -2.0f));
+	floor->Rotate(glm::vec3(0.0f, 0.0f, 0.0f));
+	std::shared_ptr<ShaderProgram> floorShader = std::make_shared<ShaderProgram>();
+	floorShader->AddShader(std::make_shared<VertexShader>("Vertex.vert"));
+	floorShader->AddShader(std::make_shared<FragmentShader>("Floor.Frag"));
+	floorShader->AttachAndLink();
+	floor->SetShader(floorShader);
+
+	obj1->Translate(glm::vec3(0.0f));
+	obj2->Translate(glm::vec3(0.0f, 0.0f, -2.0f));
+	obj3->Translate(glm::vec3(-4.0f, 0.0f, 0.0f));
+	obj4->Translate(glm::vec3(-4.0f, 0.0f, -2.0f));
+	obj5->Translate(glm::vec3(-4.0f, 0.0f, -4.0f));
+
+	MainCamera = std::make_shared<Camera>(this);
 }
 
 GameManager::~GameManager()
@@ -27,6 +43,8 @@ GameManager::~GameManager()
 
 void GameManager::Update(int time, int deltaTime, CurlHandler::ServerState serverState)
 {	
+	MainCamera->Update();
+
 	t = time;
 	dt = deltaTime;
 	MyServerState = serverState;

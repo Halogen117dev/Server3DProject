@@ -44,6 +44,8 @@ public:
 	void Rotate(glm::vec3 rotationVal);
 	void ScaleMult(glm::vec3 scaleVal);
 
+	void SetShader(std::shared_ptr<ShaderProgram> shaderProgram);
+
 private:
 	glm::vec3 Position;
 	glm::vec3 Rotation;

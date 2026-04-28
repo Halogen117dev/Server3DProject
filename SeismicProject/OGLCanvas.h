@@ -18,8 +18,10 @@ public:
     void OnPaint(wxPaintEvent& event);
     void OnIdle(wxIdleEvent& event);
     void OnSize(wxSizeEvent& event);
-
+    
     CurlHandler* ParentCurlHandler;
+
+    wxSize GetDimensions();
 private:
     int
         Height,

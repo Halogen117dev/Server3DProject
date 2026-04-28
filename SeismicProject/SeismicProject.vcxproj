@@ -200,6 +200,7 @@
     <ClInclude Include="VertexShader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Floor.frag" />
     <None Include="Fragment.frag" />
     <None Include="packages.config" />
     <None Include="Vertex.vert" />

@@ -34,11 +34,11 @@ public:
 		glm::vec3 sca = glm::vec3(1.0f)
 	);
 
-	void SetShaderProgram(std::unique_ptr<ShaderProgram> shaderProgram);
+	void SetShaderProgram(std::shared_ptr<ShaderProgram> shaderProgram);
 
 	
 private:
-	std::unique_ptr<ShaderProgram> shaderProgram;
+	std::shared_ptr<ShaderProgram> MyShaderProgram;
 	std::vector<std::unique_ptr<Texture>> Textures;
 	std::vector<std::unique_ptr<Mesh>> Meshes;
 

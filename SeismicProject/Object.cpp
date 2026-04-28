@@ -114,3 +114,8 @@ void Object::ScaleMult(glm::vec3 scaleVal)
 {
 	Scale *= scaleVal;
 }
+
+void Object::SetShader(std::shared_ptr<ShaderProgram> shaderProgram)
+{
+	MyModel->SetShaderProgram(shaderProgram);
+}
