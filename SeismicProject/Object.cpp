@@ -1,20 +1,49 @@
-#include "Object.h"
+#include "GameManager.h"
 
 
 
-Object::Object(const char* name, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
+Object::Object(GameManager* game, const char* name, const char* modelPath)
+	: Node(game, name)
 {
 	ID = name;
-	Position = pos;
-	Rotation = rot;
-	Scale = sca;
 	Type = Node::NodeType::OBJECT;
+	
+	SetTransform();
 
-	AttachModel();
+	AttachModel(modelPath);
 }
 
 Object::~Object()
 {
+}
+
+void Object::Update()
+{
+	CustomUpdate();
+
+	//do update stuff
+	for (int i = 0; i < ChildrenList.size(); i++)
+	{
+		ChildrenList[i]->Update();
+	}
+}
+
+void Object::CustomUpdate()
+{
+	GLuint serverStatus;
+	if (Game->ServerState().UnknownStatus)
+	{
+		serverStatus = 0;
+	}
+	else
+	{
+		if (Game->ServerState().IsUp)
+			serverStatus = 1;
+		else
+			serverStatus = 2;
+	}
+	MyModel->serverStatus = serverStatus;
+	MyModel->time = Game->Time();
 }
 
 void Object::Render(std::shared_ptr<Camera> camera, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
@@ -34,10 +63,12 @@ void Object::Render(std::shared_ptr<Camera> camera, glm::vec3 pos, glm::vec3 rot
 
 void Object::AttachModel()
 {
-	if (!MyModel)
-	{
-		MyModel = std::make_unique<Model>();
-	}
+	MyModel = std::make_unique<Model>();
+}
+
+void Object::AttachModel(const char* modelPath)
+{
+	MyModel = std::make_unique<Model>(modelPath);
 }
 
 void Object::SetTransform(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)

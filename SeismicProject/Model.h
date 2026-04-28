@@ -11,9 +11,14 @@
 class Model
 {
 public:
+	//temporary
+	GLuint serverStatus = 0;
+	GLuint time = 0;
+
 	//Model can be created by a user anywhere. But, rendering of model is restricted to the GPUManager.
 	//Friend class given to GPUManager, so will have to be careful with what it can do. Or something, I guess bro.
-	Model();
+	Model();	
+	Model(const char* modelPath);
 	~Model();
 
 	//CHANGE IN RENDER METHOD - NOW IT IS PUBLIC!
@@ -28,6 +33,10 @@ public:
 		glm::vec3 rot = glm::vec3(0.0f),
 		glm::vec3 sca = glm::vec3(1.0f)
 	);
+
+	void SetShaderProgram(std::unique_ptr<ShaderProgram> shaderProgram);
+
+	
 private:
 	std::unique_ptr<ShaderProgram> shaderProgram;
 	std::vector<std::unique_ptr<Texture>> Textures;
@@ -65,6 +74,11 @@ private:
 	void SetVec3Uniform(
 		const char* uniformName,
 		glm::vec3 vector
+	);
+	
+	void SetUintUniform(
+		const char* uniformName,
+		GLuint uint
 	);
 };
 

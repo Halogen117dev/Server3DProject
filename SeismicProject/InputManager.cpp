@@ -1,6 +1,6 @@
-#include "Input.h"
+#include "InputManager.h"
 
-Input::Input()
+InputManager::InputManager()
 {
 	InputMap["A"] = Key((wxKeyCode)'A', false, false);
 	InputMap["B"] = Key((wxKeyCode)'B', false, false);
@@ -31,11 +31,11 @@ Input::Input()
 
 }
 
-Input::~Input()
+InputManager::~InputManager()
 {
 }
 
-void Input::Update(wxIdleEvent& event)
+void InputManager::Update(wxIdleEvent& event)
 {
 	for (char i = 'A'; i <= 'Z'; i++)
 	{
@@ -67,12 +67,12 @@ void Input::Update(wxIdleEvent& event)
 
 }
 
-bool Input::IsKeyPressed(const char* key)
+bool InputManager::IsKeyPressed(const char* key)
 {
 	return InputMap.at(std::string(key)).IsPressed;
 }
 
-bool Input::IsKeyJustPressed(const char* key)
+bool InputManager::IsKeyJustPressed(const char* key)
 {
 	Key inputKey = InputMap.at(std::string(key));
 	

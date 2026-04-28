@@ -7,41 +7,54 @@ Model::Model()
     Rotation = glm::vec3(0.0f);
     Scale = glm::vec3(1.0f);
 
-    //Transformation tutorial
-    //I GUESS I CAN REMOVE TS
-    /*ModelMatrix = glm::translate(ModelMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
-    ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    ModelMatrix = glm::rotate(ModelMatrix, glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    ModelMatrix = glm::scale(ModelMatrix, glm::vec3(1.0f));*/
 
-    Vertex quadVertices[]
-    {
-        //Vertex Positions                  //Normals Positions                 //Texture Coords
-        glm::vec3(-0.5f, -0.5f, 0.0f),      glm::vec3(0.0f, 0.0f, 1.0f),        glm::vec2(0.0f, 0.0f),
-        glm::vec3(0.5f, -0.5f, 0.0f),       glm::vec3(0.0f, 0.0f, 1.0f),        glm::vec2(1.0f, 0.0f),
-        glm::vec3(0.5f, 0.5f, 0.0f),        glm::vec3(0.0f, 0.0f, 1.0f),        glm::vec2(1.0f, 1.0f),
-        glm::vec3(-0.5f, 0.5f, 0.0f),       glm::vec3(0.0f, 0.0f, 1.0f),        glm::vec2(0.0f, 1.0f)
-    };
-    GLuint quadIndices[]
-    {
-        0, 1, 2,
-        0, 2, 3
-    };
-
-    
-    //Meshes.push_back(std::make_unique<Mesh>(quadVertices, 4, quadIndices, 6));
+    //Vertex quadVertices[]
+    //{
+    //    //Vertex Positions                  //Normals Positions                 //Texture Coords
+    //    glm::vec3(-0.5f, -0.5f, 0.0f),      glm::vec3(0.0f, 0.0f, 1.0f),        glm::vec2(0.0f, 0.0f),
+    //    glm::vec3(0.5f, -0.5f, 0.0f),       glm::vec3(0.0f, 0.0f, 1.0f),        glm::vec2(1.0f, 0.0f),
+    //    glm::vec3(0.5f, 0.5f, 0.0f),        glm::vec3(0.0f, 0.0f, 1.0f),        glm::vec2(1.0f, 1.0f),
+    //    glm::vec3(-0.5f, 0.5f, 0.0f),       glm::vec3(0.0f, 0.0f, 1.0f),        glm::vec2(0.0f, 1.0f)
+    //};
+    //GLuint quadIndices[]
+    //{
+    //    0, 1, 2,
+    //    0, 2, 3
+    //};
     
     OBJLoader* objLoader = new OBJLoader();
     objLoader->LoadModel("resources/models/HP_Z8.obj");
     std::vector<Vertex> vertices = objLoader->GetVertices();
+    Meshes.push_back(std::make_unique<Mesh>(vertices.data(), GLuint(vertices.size())));
+
+
+    // WARNING
+    // I HAVE SWITCHED THE COLOR CHANNELS INSIDE TEXTURE CLASS CONSTRUCTOR TO ALLOW FOR THIS SHII
+    // CHANGE IT BACK
+
+    Textures.push_back(std::make_unique<Texture>("resources/images/HP_Z8_low_Export_Material_BaseColor_1k.png"));
+    //Textures.push_back(std::make_unique<Texture>("resources/images/computer.png"));
+    Textures.push_back(std::make_unique<Texture>("resources/images/bird.png"));
+
+    shaderProgram = std::make_unique<ShaderProgram>();
+    shaderProgram->AddShader(std::make_shared<VertexShader>("Vertex.vert"));
+    shaderProgram->AddShader(std::make_shared<FragmentShader>("Fragment.frag"));
+    shaderProgram->AttachAndLink();
+
+    delete objLoader;
+}
+
+Model::Model(const char* modelPath)
+{
+    ModelMatrix = glm::mat4(1.0f);
+    Position = glm::vec3(0.0f);
+    Rotation = glm::vec3(0.0f);
+    Scale = glm::vec3(1.0f);
+
+    OBJLoader* objLoader = new OBJLoader();
+    objLoader->LoadModel(modelPath);
+    std::vector<Vertex> vertices = objLoader->GetVertices();
     Meshes.push_back(std::make_unique<Mesh>(vertices.data(), vertices.size()));
-
-    //std::vector<GLuint> indices = objLoader->GetIndices();
-    //Meshes.push_back(std::make_unique<Mesh>(vertices.data(), vertices.size(), indices.data(), indices.size()));
-
-    //mesh = std::make_unique<Mesh>(vertices, 9);
-    //mesh = std::make_unique<Mesh>(quadVertices, 12, quadIndices, 6);
 
     // WARNING
     // I HAVE SWITCHED THE COLOR CHANNELS INSIDE TEXTURE CLASS CONSTRUCTOR TO ALLOW FOR THIS SHII
@@ -125,6 +138,9 @@ void Model::Render(
         SetVec3Uniform("lightPos", lightPos);
         SetVec3Uniform("cameraPos", cameraPos);
 
+        //TEMP
+        SetUintUniform("serverStatus", serverStatus);
+        SetUintUniform("time", time);
         
         glBindVertexArray(Meshes[i]->GetVAO());
         if (Meshes[i]->GetIsIndexed())
@@ -142,6 +158,11 @@ void Model::Render(
         glActiveTexture(0);
         glBindTexture(GL_TEXTURE_2D, 0); 
     }      
+}
+
+void Model::SetShaderProgram(std::unique_ptr<ShaderProgram> shaderProgram)
+{
+
 }
 
 void Model::TransformMatrix(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
@@ -197,5 +218,13 @@ void Model::SetVec3Uniform(const char* uniformName, glm::vec3 vector)
         glGetUniformLocation(shaderProgram->GetHandle(), uniformName),
         1,
         glm::value_ptr(vector)
+    );
+}
+
+void Model::SetUintUniform(const char* uniformName, GLuint uint)
+{
+    glUniform1ui(
+        glGetUniformLocation(shaderProgram->GetHandle(), uniformName),
+        uint
     );
 }

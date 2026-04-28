@@ -1,11 +1,23 @@
 #include "GameManager.h"
 
 
-GameManager::GameManager()
+GameManager::GameManager(InputManager* input)
 {
-	MainNode = std::make_shared<Node>("MainNode");
-	MainNode->AddChild(std::make_shared<Object>("Obj1"));
-	MainNode->AddChild(std::make_shared<Object>("Obj2"));
+	//MAIN NODE IS NEVER IN NODEMAP
+	MainNode = std::make_shared<Node>(this, "MainNode");
+	//MAIN NODE IS NEVER IN NODEMAP
+
+	Input = input;
+
+	std::shared_ptr<Object> obj1 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<Object>(this, "Obj1", "resources/models/HP_Z8.obj")));
+	std::shared_ptr<Object> obj2 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<Object>(this, "Obj2", "resources/models/HP_Z8.obj")));
+	std::shared_ptr<Object> obj3 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<Object>(this, "Obj3", "resources/models/HP_Z8.obj")));
+	std::shared_ptr<Object> obj4 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<Object>(this, "Obj4", "resources/models/HP_Z8.obj")));
+	std::shared_ptr<Object> obj5 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<Object>(this, "Obj5", "resources/models/HP_Z8.obj")));
+
+	std::shared_ptr<Object> floor = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<Object>(this, "Obj5", "resources/models/floor.obj")));
+	floor->Translate(glm::vec3(0.0f, -0.2f, 0.0f));
+
 	MainCamera = std::make_shared<Camera>();
 }
 
@@ -13,52 +25,13 @@ GameManager::~GameManager()
 {
 }
 
-void GameManager::Update(Input& input)
+void GameManager::Update(int time, int deltaTime, CurlHandler::ServerState serverState)
 {	
-	std::shared_ptr<Object> obj1 = std::dynamic_pointer_cast<Object>(MainNode->GetChildrenList()[0]);
-	glm::vec3 translation(0.0f);
-	if (input.IsKeyPressed("W"))
-	{
-		translation += glm::vec3(0.0f, 0.0f, -1.0f);
-	}
-	if (input.IsKeyPressed("A"))
-	{
-		translation += glm::vec3(-1.0f, 0.0f, 0.0f);
-	}
-	if (input.IsKeyPressed("S"))
-	{
-		translation += glm::vec3(0.0f, 0.0f, 1.0f);
-	}
-	if (input.IsKeyPressed("D"))
-	{
-		translation += glm::vec3(1.0f, 0.0f, 0.0f);
-	}
-	if (input.IsKeyPressed("R"))
-	{
-		translation += glm::vec3(0.0f, 1.0f, 0.0f);
-	}
-	if (input.IsKeyPressed("F"))
-	{
-		translation += glm::vec3(0.0f, -1.0f, 0.0f);
-	}
-	//translation = glm::normalize(translation);
-	GLfloat speed = 0.0005f;
-	translation = glm::vec3(translation.x * speed, translation.y * speed, translation.z * speed);
-	obj1->Translate(translation);
+	t = time;
+	dt = deltaTime;
+	MyServerState = serverState;
 
-	glm::vec3 rotation(0.0f);
-	if (input.IsKeyPressed("E"))
-	{
-		rotation += glm::vec3(0.0f, 1.0f, 0.0f);
-	}
-	if (input.IsKeyPressed("Q"))
-	{
-		rotation += glm::vec3(0.0f, -1.0f, 0.0f);
-	}
-	//translation = glm::normalize(translation);
-	GLfloat rotSpeed = 0.05f;
-	rotation = glm::vec3(rotation.x * rotSpeed, rotation.y * rotSpeed, rotation.z * rotSpeed);
-	obj1->Rotate(rotation);
+	MainNode->Update();
 }
 
 std::shared_ptr<Node> GameManager::GetMainNode()
@@ -69,4 +42,36 @@ std::shared_ptr<Node> GameManager::GetMainNode()
 std::shared_ptr<Camera>& GameManager::GetCamera()
 {
 	return MainCamera;
+}
+
+std::shared_ptr<Node> GameManager::GetNodeFromMap(const char* id)
+{
+	if (NodeMap.contains(id))
+	{
+		return NodeMap.at(id);
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
+void GameManager::AddNodeToMap(std::shared_ptr<Node> node)
+{
+	NodeMap[node->GetID()] = node;
+}
+
+GLuint GameManager::Time()
+{
+	return t;
+}
+
+GLuint GameManager::DeltaTime()
+{
+	return dt;
+}
+
+CurlHandler::ServerState GameManager::ServerState()
+{
+	return MyServerState;
 }

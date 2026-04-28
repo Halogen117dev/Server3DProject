@@ -1,6 +1,6 @@
 #include "OGLCanvas.h"
 
-
+int counter = 0;
 
 OGLCanvas::OGLCanvas(MainFrame* parent, const wxGLAttributes& canvasAttrs)
     : wxGLCanvas(parent, canvasAttrs)
@@ -17,7 +17,7 @@ OGLCanvas::OGLCanvas(MainFrame* parent, const wxGLAttributes& canvasAttrs)
     //Other Stuff
 
     ParentCurlHandler = parent->MyCurlHandler;
-    MyInput = new Input();
+    Input = new InputManager();
 
     wxGLContextAttrs ctxAttrs;
     ctxAttrs.PlatformDefaults().CoreProfile().OGLVersion(4, 6).EndList();
@@ -50,7 +50,7 @@ OGLCanvas::~OGLCanvas()
     delete MyGPU;
     delete MyGame;
     delete MyTimer;
-    delete MyInput;
+    delete Input;
 }
 
 
@@ -62,10 +62,10 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     
     //SETCURRENT DOES NOT WORK HERE FOR SOME REASON
     //SO IT IS PUT IN ONSIZE() METHOD
-    
+    CurlHandler::ServerState serverState;
     if (ParentCurlHandler)
     {
-        CurlHandler::ServerState serverState = ParentCurlHandler->RequestServerState();
+        serverState = ParentCurlHandler->RequestServerState();
 
         if (serverState.UnknownStatus)
         {
@@ -96,6 +96,10 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
         BGColor.b = 0.0f;
     }
 
+    BGColor.r = 0.55f;
+    BGColor.g = 0.55f;
+    BGColor.b = 0.65f;
+
     //std::stringstream sstream;
     //sstream << ParentCurlHandler->ElapsedTimeSinceRequest << "   " << ParentCurlHandler->CurlTimer.DebugGetDT();
     //wxLogLastError(sstream.str());
@@ -108,7 +112,7 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     //FOUND THIS THROUGH THE OBJLoader's FILE.is_open THING
     if (MyGame != nullptr)
     {
-        MyGame->Update(*MyInput);
+        MyGame->Update(t, dt, serverState);
         MyGPU->SetBGColor(BGColor);
         MyGPU->Render(MyGame->GetCamera(), MyGame->GetMainNode());
     }
@@ -120,7 +124,11 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
 //WORKS FOR NEW IMPLEMENTATION TOO!
 void OGLCanvas::OnIdle(wxIdleEvent& event)
 {
-    MyInput->Update(event);
+    //std::string out = std::to_string(counter++);
+    //out.push_back('\n');
+    //OutputDebugStringA(out.c_str());
+
+    Input->Update(event);
     Refresh();
 
     event.Skip();
@@ -139,7 +147,7 @@ void OGLCanvas::OnSize(wxSizeEvent& event)
         //Future work: ADD SETCURRENT CHECK IN RENDER/ONPAINT FUNCTION TO SKIP OGL STUFF
         SetCurrent(*OGLContext);
         MyGPU->InitOGL();
-        MyGame = new GameManager();
+        MyGame = new GameManager(Input);
     }
 
     if (MyGPU->GetOGLInitStatus())

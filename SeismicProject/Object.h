@@ -5,12 +5,14 @@ class Object : public Node
 {
 public:
 	Object(
+		GameManager* game,
 		const char* name,
-		glm::vec3 pos = glm::vec3(0.0f),
-		glm::vec3 rot = glm::vec3(0.0f),
-		glm::vec3 sca = glm::vec3(1.0f)
+		const char* modelPath 
 	);
 	~Object();
+
+	void Update() override;
+	void CustomUpdate() override;
 
 	void Render(
 		std::shared_ptr<Camera> camera,
@@ -20,6 +22,7 @@ public:
 	) override;
 
 	void AttachModel();
+	void AttachModel(const char* modelPath);
 
 	void SetTransform(
 		glm::vec3 pos = glm::vec3(0.0f),

@@ -1,26 +1,22 @@
-#include "Node.h"
+#include"GameManager.h"
 
-Node::Node()
-{
-	ID = "Untitled Node";
-	Type = Node::NodeType::NODE;
-}
+//Node::Node()
+//{
+//	ID = "Untitled Node";
+//	Type = Node::NodeType::NODE;
+//}
 
-Node::Node(const char* name)
-{
-	ID = name;
-	Type = Node::NodeType::NODE;
-}
-
-Node::Node(const char* name, NodeType type)
+Node::Node(GameManager* game, const char* name)
 {
 	ID = name;
-	Type = type;
+	Type = Node::NodeType::NODE;
+	Game = game;
 }
 
 Node::~Node()
 {
-
+	// DO NOT DELETE GAME
+	// IT'S NOT WORTH IT
 }
 
 void Node::Render(std::shared_ptr<Camera> camera, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
@@ -33,6 +29,8 @@ void Node::Render(std::shared_ptr<Camera> camera, glm::vec3 pos, glm::vec3 rot, 
 
 void Node::Update()
 {
+	CustomUpdate();
+
 	//do update stuff
 	for (int i = 0; i < ChildrenList.size(); i++)
 	{
@@ -40,14 +38,24 @@ void Node::Update()
 	}
 }
 
-void Node::AddChild()
+void Node::CustomUpdate()
 {
-	ChildrenList.push_back(std::make_shared<Node>());
+	
 }
 
-void Node::AddChild(std::shared_ptr<Node> node)
+std::shared_ptr<Node> Node::AddChild()
+{
+	std::shared_ptr<Node> node;
+	ChildrenList.push_back(node);
+	Game->AddNodeToMap(node);
+
+	return node;
+}
+
+std::shared_ptr<Node> Node::AddChild(std::shared_ptr<Node> node)
 {
 	ChildrenList.push_back(node);
+	return node;
 }
 
 std::vector<std::shared_ptr<Node>>& Node::GetChildrenList()

@@ -4,6 +4,8 @@
 
 #include<string>
 
+class GameManager;
+
 class Node
 {
 public:
@@ -14,8 +16,8 @@ public:
 		POINTLIGHT
 	};
 public:
-	Node();
-	Node(const char* name);
+	Node() = delete;
+	Node(GameManager* game, const char* name);
 	~Node();
 
 	virtual void Render(
@@ -26,21 +28,20 @@ public:
 	);
 
 	virtual void Update();
+	virtual void CustomUpdate();
 
-	void AddChild();
-	void AddChild(std::shared_ptr<Node> node);
+	std::shared_ptr<Node> AddChild();
+	std::shared_ptr<Node> AddChild(std::shared_ptr<Node> node);
 
 	std::vector<std::shared_ptr<Node>>& GetChildrenList();
 
 	std::string GetID();
 	void SetID(const char* id);
 protected:
-	//For derived classes
-	Node(const char* name, NodeType type);
-
 	enum NodeType Type;
 	std::string ID;
 	
 	std::vector<std::shared_ptr<Node>> ChildrenList;
+	GameManager* Game;
 };
 

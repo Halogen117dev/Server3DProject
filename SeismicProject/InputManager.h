@@ -4,11 +4,11 @@
 #include<string>
 #include<unordered_map>
 
-class Input
+class InputManager
 {
 public:
-	Input();
-	~Input();
+	InputManager();
+	~InputManager();
 
 private:
 	struct Key

@@ -3,7 +3,10 @@
 
 #include"Node.h"
 #include"Object.h"
-#include"Input.h"
+
+
+#include"InputManager.h"
+#include"CurlHandler.h"
 
 #include<vector>
 #include<memory>
@@ -11,11 +14,11 @@
 class GameManager
 {
 public:
-	GameManager();
+	GameManager(InputManager* input);
 	~GameManager();
 
 	//
-	void Update(Input& input);
+	void Update(int time, int deltaTime, CurlHandler::ServerState serverState);
 
 	//Returns the vector filled with every single model in the program
 	//Right now, it just returns whatever the actual ModelList vector is
@@ -27,12 +30,26 @@ public:
 	std::shared_ptr<Node> GetMainNode();
 	std::shared_ptr<Camera>& GetCamera();
 
+	
+	std::shared_ptr<Node> GetNodeFromMap(const char* id);
+	void AddNodeToMap(std::shared_ptr<Node> node);
 
+	GLuint Time();
+	GLuint DeltaTime();
+	CurlHandler::ServerState ServerState();
+
+	InputManager* Input;
 private:
 	std::shared_ptr<Node> MainNode;
 	std::shared_ptr<Camera> MainCamera;
 
+	std::unordered_map < std::string, std::shared_ptr<Node>> NodeMap;
+
 	glm::vec3 rotation1 = glm::vec3(0.0f);
 	glm::vec3 rotation2 = glm::vec3(0.0f);
+
+	GLuint dt, t;
+
+	CurlHandler::ServerState MyServerState;
 };
 
