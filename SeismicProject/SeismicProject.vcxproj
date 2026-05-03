@@ -117,7 +117,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SeismicProject\dependencies\include\assimp_include;$(SolutionDir)\SeismicProject\dependencies\include\stb_image;$(SolutionDir)\SeismicProject\dependencies\include\GlMaths;D:\External Libraries\glad\include;D:\External Libraries\glad\src;$(WXWIN)\include\msvc;$(WXWIN)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SeismicProject\dependencies\include\assimp_include;$(SolutionDir)\SeismicProject\dependencies\include\stb_image;$(SolutionDir)\SeismicProject\dependencies\include\GlMaths;$(SolutionDir)\SeismicProject\dependencies\glad\include;$(SolutionDir)\SeismicProject\dependencies\glad\src;$(WXWIN)\include\msvc;$(WXWIN)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <FloatingPointModel>Fast</FloatingPointModel>

@@ -16,7 +16,7 @@ bool App::OnInit()
     if (!wxApp::OnInit())
         return false;
 
-    MyFrame = new MainFrame("Hello OpenGL");
+    MyFrame = new MainFrame("Server 3D");
     MyFrame->Show(true);
 
     return true;
