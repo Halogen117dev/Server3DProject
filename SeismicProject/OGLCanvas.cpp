@@ -62,38 +62,10 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     
     //SETCURRENT DOES NOT WORK HERE FOR SOME REASON
     //SO IT IS PUT IN ONSIZE() METHOD
-    CurlHandler::ServerState serverState;
+    std::vector<CurlHandler::WorkstationState> workstations;
     if (ParentCurlHandler)
     {
-        serverState = ParentCurlHandler->RequestServerState();
-
-        if (serverState.UnknownStatus)
-        {
-            BGColor.r = 0.0f;
-            BGColor.g = 0.0f;
-            BGColor.b = 1.0f;
-        }
-        else
-        {
-            if (serverState.IsUp)
-            {
-                BGColor.r = 0.0f;
-                BGColor.g = 1.0f;
-                BGColor.b = 0.0f;
-            }
-            else if (!serverState.IsUp)
-            {
-                BGColor.r = 1.0f;
-                BGColor.g = 0.0f;
-                BGColor.b = 0.0f;
-            }
-        }
-    }
-    else
-    {
-        BGColor.r = 0.0f;
-        BGColor.g = 0.0f;
-        BGColor.b = 0.0f;
+        workstations = ParentCurlHandler->RequestWorkstations();
     }
 
     BGColor.r = 0.55f;
@@ -112,7 +84,7 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     //FOUND THIS THROUGH THE OBJLoader's FILE.is_open THING
     if (MyGame != nullptr)
     {
-        MyGame->Update(t, dt, serverState);
+        MyGame->Update(t, dt, workstations);
         MyGPU->SetBGColor(BGColor);
         MyGPU->Render(MyGame->GetCamera(), MyGame->GetMainNode());
     }

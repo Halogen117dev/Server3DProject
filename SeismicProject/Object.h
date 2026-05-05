@@ -23,6 +23,7 @@ public:
 
 	void AttachModel();
 	void AttachModel(const char* modelPath);
+	void AttachTexture(const char* texturePath);
 
 	void SetTransform(
 		glm::vec3 pos = glm::vec3(0.0f),

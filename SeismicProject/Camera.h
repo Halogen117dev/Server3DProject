@@ -28,7 +28,7 @@ public:
 	Camera(
 		GameManager* game, 
 		float aspectRatio = static_cast<float>(4) / static_cast<float>(3), 
-		float fov = 80.0f, 
+		float fov = 60.0f, 
 		float nearPlane = 0.1f, 
 		float farPlane = 1000.0f);
 	~Camera();

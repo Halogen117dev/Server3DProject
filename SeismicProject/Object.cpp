@@ -31,13 +31,13 @@ void Object::Update()
 void Object::CustomUpdate()
 {
 	GLuint serverStatus;
-	if (Game->ServerState().UnknownStatus)
+	if (!Game->GetWorkstationState(ID.c_str()).PowerState)
 	{
 		serverStatus = 0;
 	}
 	else
 	{
-		if (Game->ServerState().IsUp)
+		if (Game->GetWorkstationState(ID.c_str()).Status)
 			serverStatus = 1;
 		else
 			serverStatus = 2;
@@ -69,6 +69,11 @@ void Object::AttachModel()
 void Object::AttachModel(const char* modelPath)
 {
 	MyModel = std::make_unique<Model>(modelPath);
+}
+
+void Object::AttachTexture(const char* texturePath)
+{
+	MyModel->SetTexture(texturePath);
 }
 
 void Object::SetTransform(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)

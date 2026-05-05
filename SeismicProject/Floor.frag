@@ -6,7 +6,6 @@ in vec3 vNorm;
 in vec2 texCoord;
 
 uniform sampler2D texture0;
-uniform sampler2D texture1;
 
 uniform vec3 lightPos;
 uniform vec3 cameraPos;

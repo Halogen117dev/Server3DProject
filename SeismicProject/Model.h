@@ -35,7 +35,7 @@ public:
 	);
 
 	void SetShaderProgram(std::shared_ptr<ShaderProgram> shaderProgram);
-
+	void SetTexture(const char* texturePath);
 	
 private:
 	std::shared_ptr<ShaderProgram> MyShaderProgram;

@@ -6,7 +6,6 @@ in vec3 vNorm;
 in vec2 texCoord;
 
 uniform sampler2D texture0;
-uniform sampler2D texture1;
 
 uniform vec3 lightPos;
 uniform vec3 cameraPos;
@@ -79,10 +78,10 @@ void main()
 		serverModifier = vec3(0.35f);
 		break;
 	case 1:
-		serverModifier = sinePulse(vec3(0.25f, 1.0f, 0.125f), 2.5f);
+		serverModifier = sinePulse(vec3(0.25f, 1.0f, 0.125f), 1.5f);
 		break;
 	case 2:
-		serverModifier = sinePulse(vec3(1.0f, 0.05f, 0.125f), 5.5f);
+		serverModifier = sinePulse(vec3(1.0f, 0.05f, 0.125f), 2.5f);
 		break;
 	}
 
@@ -90,6 +89,4 @@ void main()
 	texture(texture0, texCoord) *
 	(vec4(ambientFinal, 1.0f) + vec4(diffuseFinal, 1.0f) + vec4(specularFinal, 1.0f)) *
 	vec4(serverModifier, 1.0f);
-
-	//FragColor = texture(texture0, texCoord)	;
 }

@@ -33,8 +33,6 @@ Model::Model()
     // CHANGE IT BACK
 
     Textures.push_back(std::make_unique<Texture>("resources/images/HP_Z8_low_Export_Material_BaseColor_1k.png"));
-    //Textures.push_back(std::make_unique<Texture>("resources/images/computer.png"));
-    Textures.push_back(std::make_unique<Texture>("resources/images/bird.png"));
 
     MyShaderProgram = std::make_shared<ShaderProgram>();
     MyShaderProgram->AddShader(std::make_shared<VertexShader>("Vertex.vert"));
@@ -61,8 +59,6 @@ Model::Model(const char* modelPath)
     // CHANGE IT BACK
 
     Textures.push_back(std::make_unique<Texture>("resources/images/HP_Z8_low_Export_Material_BaseColor_1k.png"));
-    //Textures.push_back(std::make_unique<Texture>("resources/images/computer.png"));
-    Textures.push_back(std::make_unique<Texture>("resources/images/bird.png"));
 
     MyShaderProgram = std::make_shared<ShaderProgram>();
     MyShaderProgram->AddShader(std::make_shared<VertexShader>("Vertex.vert"));
@@ -151,6 +147,13 @@ void Model::Render(
 void Model::SetShaderProgram(std::shared_ptr<ShaderProgram> shaderProgram)
 {
     MyShaderProgram = shaderProgram;
+}
+
+void Model::SetTexture(const char* texturePath)
+{
+    Textures.clear();
+    Textures.push_back(std::make_unique<Texture>(texturePath));
+
 }
 
 void Model::TransformMatrix(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)

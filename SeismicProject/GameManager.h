@@ -18,7 +18,7 @@ public:
 	~GameManager();
 
 	//
-	void Update(int time, int deltaTime, CurlHandler::ServerState serverState);
+	void Update(int time, int deltaTime, std::vector<CurlHandler::WorkstationState> workstations);
 
 	//Returns the vector filled with every single model in the program
 	//Right now, it just returns whatever the actual ModelList vector is
@@ -36,7 +36,7 @@ public:
 
 	GLuint Time();
 	GLuint DeltaTime();
-	CurlHandler::ServerState ServerState();
+	CurlHandler::WorkstationState GetWorkstationState(const char* hostname);
 
 	InputManager* Input;
 private:
@@ -50,6 +50,6 @@ private:
 
 	GLuint dt, t;
 
-	CurlHandler::ServerState MyServerState;
+	std::vector<CurlHandler::WorkstationState> Workstations;
 };
 
