@@ -202,6 +202,8 @@
   <ItemGroup>
     <None Include="Floor.frag" />
     <None Include="Fragment.frag" />
+    <None Include="Framebuffer.frag" />
+    <None Include="Framebuffer.vert" />
     <None Include="packages.config" />
     <None Include="Vertex.vert" />
   </ItemGroup>

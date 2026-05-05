@@ -191,5 +191,11 @@
     <None Include="Floor.frag">
       <Filter>Shaders %28Source%29\Fragment Shaders</Filter>
     </None>
+    <None Include="Framebuffer.frag">
+      <Filter>Shaders %28Source%29\Fragment Shaders</Filter>
+    </None>
+    <None Include="Framebuffer.vert">
+      <Filter>Shaders %28Source%29\Vertex Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

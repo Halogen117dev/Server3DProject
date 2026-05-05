@@ -145,6 +145,7 @@ void OGLCanvas::OnSize(wxSizeEvent& event)
         Height = viewPortSize.y;
         Width = viewPortSize.x;
         MyGame->GetCamera()->SetAspectRatio(static_cast<float>(Width) / Height);
+        //MyGPU->GenerateFBORBO(Width, Height);
     }
 
     event.Skip();

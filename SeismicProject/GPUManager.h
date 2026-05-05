@@ -33,5 +33,16 @@ private:
 	//std::vector<std::shared_ptr<Model>> ModelList;
 private:
 	glm::vec4 BGColor;
+
+	GLuint FBO;
+	GLuint RBO;
+    GLuint FramebufferTexture;
+
+	GLuint RectVAO, RectVBO;
+
+	std::unique_ptr<ShaderProgram> FrameBufferShaderProgram;
+
+public:
+	void GenerateFBORBO(int width, int height);
 };
 
