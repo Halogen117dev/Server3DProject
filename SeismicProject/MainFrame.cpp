@@ -7,7 +7,7 @@ MainFrame::MainFrame(const wxString& title)
     MyCurlHandler = new CurlHandler("http://192.168.1.101:5001/api/workstations");
 
     wxGLAttributes vAttrs;
-    vAttrs.PlatformDefaults().Defaults().EndList();
+    vAttrs.PlatformDefaults().Defaults().Samplers(8).EndList();
     this->SetSize(1920, 1080);
     if (wxGLCanvas::IsDisplaySupported(vAttrs))
     {

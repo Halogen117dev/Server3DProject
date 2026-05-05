@@ -22,7 +22,7 @@ OGLCanvas::OGLCanvas(MainFrame* parent, const wxGLAttributes& canvasAttrs)
     wxGLContextAttrs ctxAttrs;
     ctxAttrs.PlatformDefaults().CoreProfile().OGLVersion(4, 6).EndList();
     OGLContext = new wxGLContext(this, nullptr, &ctxAttrs);
-
+    
     if (!OGLContext->IsOK())
     {
         wxMessageBox(
