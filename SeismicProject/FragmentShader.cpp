@@ -8,5 +8,6 @@ FragmentShader::FragmentShader(const char* shaderSource)
 
 	glShaderSource(Handle, 1, &fragmentCode, nullptr);
 	glCompileShader(Handle);
+	CheckShaderCompilation();
 }
 

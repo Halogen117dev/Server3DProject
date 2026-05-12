@@ -30,13 +30,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -49,7 +49,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -156,12 +156,14 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CurlHandler.cpp" />
     <ClCompile Include="DefaultShader.cpp" />
+    <ClCompile Include="FloorMaterial.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="deprecatedMainFrame.cpp" />
     <ClCompile Include="GPUManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="MainFrame.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Node.cpp" />
@@ -173,6 +175,7 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="VertexShader.cpp" />
+    <ClCompile Include="WorkstationMat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -182,10 +185,12 @@
     <ClInclude Include="dependencies\include\glad\glad.h" />
     <ClInclude Include="dependencies\include\KHR\khrplatform.h" />
     <ClInclude Include="deprecatedMainFrame.h" />
+    <ClInclude Include="FloorMaterial.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GPUManager.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MainFrame.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Node.h" />
@@ -198,10 +203,13 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexShader.h" />
+    <ClInclude Include="WorkstationMat.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Default.frag" />
+    <None Include="Default.vert" />
     <None Include="Floor.frag" />
-    <None Include="Fragment.frag" />
+    <None Include="Workstation.frag" />
     <None Include="Framebuffer.frag" />
     <None Include="Framebuffer.vert" />
     <None Include="packages.config" />

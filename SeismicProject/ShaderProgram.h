@@ -5,7 +5,6 @@
 #include<vector>
 #include<string>
 #include<memory>
-#include<exception>
 
 class ShaderProgram
 {
@@ -25,7 +24,7 @@ public:
 	void AddShader(std::shared_ptr<DefaultShader> shader);
 
 	GLuint GetHandle();
-	bool AttachAndLink();
+	void AttachAndLink();
 
 private:
 	GLuint Handle;

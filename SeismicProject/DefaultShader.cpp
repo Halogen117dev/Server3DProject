@@ -30,3 +30,15 @@ std::string DefaultShader::get_file_contents(const char* filename)
 	//throw("Shader file not found!");
 	return std::string("Shader file not found!");
 }
+
+void DefaultShader::CheckShaderCompilation()
+{
+	GLint success;
+	GLchar infoLog[2048];
+	glGetShaderiv(Handle, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(Handle, 2048, nullptr,infoLog);
+		throw(DefaultShader::ShaderException(infoLog));
+	}
+}

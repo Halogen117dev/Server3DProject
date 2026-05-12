@@ -5,13 +5,8 @@ in vec3 vPos;
 in vec3 vNorm;
 in vec2 texCoord;
 
-uniform sampler2D texture0;
-
 uniform vec3 lightPos;
 uniform vec3 cameraPos;
-
-uniform uint serverStatus;
-uniform uint time;
 
 
 //NOT NORMALIZING VNORM RIGHT NOW
@@ -42,20 +37,6 @@ vec3 calculateSpecular()
 	vec3 specularColour = vec3(1.0f, 1.0f, 1.0f) * specularConstant;
 
 	return specularColour;
-}
-
-vec3 sinePulse(vec3 col, float speed)
-{
-	vec3 result = vec3(1.0f, 1.0f, 1.0f);
-
-	float timef = float(time);
-	timef /= 1000.0f;
-
-	float factor = abs(sin(timef * speed));
-
-	col = col * factor;
-
-	return result + col;
 }
 
 void main()

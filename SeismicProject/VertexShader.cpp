@@ -8,4 +8,5 @@ VertexShader::VertexShader(const char* shaderSource)
 
 	glShaderSource(Handle, 1, &vertexCode, nullptr);
 	glCompileShader(Handle);
+	CheckShaderCompilation();
 }

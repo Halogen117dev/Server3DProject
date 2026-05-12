@@ -4,17 +4,12 @@
 
 #include"Camera.h"
 #include"Mesh.h"
-#include"Texture.h"
-#include"ShaderProgram.h"
-#include"OBJLoader.h"
+#include"Material.h"
+#include"FloorMaterial.h"
 
 class Model
 {
 public:
-	//temporary
-	GLuint serverStatus = 0;
-	GLuint time = 0;
-
 	//Model can be created by a user anywhere. But, rendering of model is restricted to the GPUManager.
 	//Friend class given to GPUManager, so will have to be careful with what it can do. Or something, I guess bro.
 	Model();	
@@ -24,6 +19,7 @@ public:
 	//CHANGE IN RENDER METHOD - NOW IT IS PUBLIC!
 	//RENDER CALLS FOR EVERYONE!
 public:
+	// DISREGARD BELOW COMMENTS, ONLY LEGACY NOSTALGIA
 	//THIS ALLOWS ONLY THE GPU MANAGER TO USE THE RENDER FUNCTION.
 	//HOWEVER, PROBLEM ARISES AS GPU MANAGER CAN ALSO NOW ACCESS OTHER PRIVATE MEMBERS.
 	//friend class GPUManager;
@@ -34,12 +30,10 @@ public:
 		glm::vec3 sca = glm::vec3(1.0f)
 	);
 
-	void SetShaderProgram(std::shared_ptr<ShaderProgram> shaderProgram);
-	void SetTexture(const char* texturePath);
+	void SetMaterial(std::shared_ptr<Material> material);
 	
 private:
-	std::shared_ptr<ShaderProgram> MyShaderProgram;
-	std::vector<std::unique_ptr<Texture>> Textures;
+	std::shared_ptr<Material> MyMaterial;
 	std::vector<std::unique_ptr<Mesh>> Meshes;
 
 private:
@@ -53,10 +47,6 @@ private:
 	// HAS BEEN INITIALIZED TO IDENTITY MATRIX.
 	void TransformMatrix(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca);
 	void TransformMatrix(glm::mat4 transformMatrix);
-
-	//temporary REMOVED NOW AHAHAHHAHA
-	//glm::mat4 ViewMatrix;
-	//glm::mat4 ProjectionMatrix;
 
 private:
 	//Uniform setting functions

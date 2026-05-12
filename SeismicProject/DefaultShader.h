@@ -42,5 +42,7 @@ protected:
 
 	//HELPER FOR READING OF SHADER FILES
 	std::string get_file_contents(const char* filename);
+
+	void CheckShaderCompilation();
 };
 

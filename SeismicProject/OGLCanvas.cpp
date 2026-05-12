@@ -82,6 +82,7 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     
     //MyGame->Update will be called even when the game isn't even made yet!
     //FOUND THIS THROUGH THE OBJLoader's FILE.is_open THING
+    //FIXED THIS SHIT USING IF, SIMPLE AS
     if (MyGame != nullptr)
     {
         MyGame->Update(t, dt, workstations);
@@ -145,7 +146,7 @@ void OGLCanvas::OnSize(wxSizeEvent& event)
         Height = viewPortSize.y;
         Width = viewPortSize.x;
         MyGame->GetCamera()->SetAspectRatio(static_cast<float>(Width) / Height);
-        //MyGPU->GenerateFBORBO(Width, Height);
+        MyGPU->GenerateFBORBO(Width, Height);
     }
 
     event.Skip();

@@ -26,6 +26,8 @@ public:
 	//function will iterate through every Object3D to give the ModelList or
 	//some shit bro I don't know to be honest.
 	//
+	// REDUNDANT COMMENT ABOVE, IGNORE AT ALL COSTS
+	// 
 	//Making it return a reference to the list instead of a copy.
 	std::shared_ptr<Node> GetMainNode();
 	std::shared_ptr<Camera>& GetCamera();

@@ -10,7 +10,8 @@
 class Texture
 {
 public:
-	Texture(const char* imagePath);
+	//GL
+	Texture(const char* imagePath, GLint internalFormat = GL_RGB, GLenum externalFormat = GL_RGB);
 	~Texture();
 	
 	void Bind();
@@ -21,9 +22,10 @@ private:
 		Width,
 		Height,
 		NumChannels;
-
+	GLint Format;
 public:
 	//Getter methods
 	GLuint GetHandle();
+	GLint GetFormat();
 };
 

@@ -9,7 +9,7 @@ Camera::Camera(GameManager* game, float aspectRatio, float fov, float nearPlane,
     NearPlane(nearPlane),
     FarPlane(farPlane)
 {
-    Speed = 1.75f;
+    Speed = 0.5f;
     Sensitivity = 0.5f;
 
     Position = glm::vec3(0.0f, 1.0f, 4.0f);
@@ -92,7 +92,11 @@ void Camera::Update()
     if(glm::length(trans))
         trans = trans / glm::length(trans);
 
-    Translate(trans * Speed * 0.000005f * GLfloat(Game->DeltaTime()));
+    if(Game->Input->IsKeyPressed("Shift"))
+        Translate(trans * Speed * 2.0f * 0.000005f * GLfloat(Game->DeltaTime()));
+    else
+        Translate(trans * Speed * 0.000005f * GLfloat(Game->DeltaTime()));
+
 
     UpdateProjectionMatrix();
     UpdateViewMatrix();
