@@ -40,6 +40,7 @@ InputManager::InputManager(wxGLCanvas* parent)
 	InputMap["RMB"] = Key(WXK_RBUTTON, false, false);
 	InputMap["LMB"] = Key(WXK_LBUTTON, false, false);
 	InputMap["MMB"] = Key(WXK_LBUTTON, false, false);
+	InputMap["Shift"] = Key(WXK_SHIFT, false, false);
 
 
 }

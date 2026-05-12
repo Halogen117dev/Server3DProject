@@ -23,7 +23,7 @@ public:
 
 	void AttachModel();
 	void AttachModel(const char* modelPath);
-	void AttachTexture(const char* texturePath);
+	void AttachMaterial(std::shared_ptr<Material> material);
 
 	void SetTransform(
 		glm::vec3 pos = glm::vec3(0.0f),
@@ -44,8 +44,6 @@ public:
 	void Translate(glm::vec3 translationVal);
 	void Rotate(glm::vec3 rotationVal);
 	void ScaleMult(glm::vec3 scaleVal);
-
-	void SetShader(std::shared_ptr<ShaderProgram> shaderProgram);
 
 private:
 	glm::vec3 Position;

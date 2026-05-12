@@ -30,7 +30,7 @@ void Object::Update()
 
 void Object::CustomUpdate()
 {
-	GLuint serverStatus;
+	/*GLuint serverStatus;
 	if (!Game->GetWorkstationState(ID.c_str()).PowerState)
 	{
 		serverStatus = 0;
@@ -43,7 +43,7 @@ void Object::CustomUpdate()
 			serverStatus = 2;
 	}
 	MyModel->serverStatus = serverStatus;
-	MyModel->time = Game->Time();
+	MyModel->time = Game->Time();*/
 }
 
 void Object::Render(std::shared_ptr<Camera> camera, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
@@ -71,9 +71,9 @@ void Object::AttachModel(const char* modelPath)
 	MyModel = std::make_unique<Model>(modelPath);
 }
 
-void Object::AttachTexture(const char* texturePath)
+void Object::AttachMaterial(std::shared_ptr<Material> material)
 {
-	MyModel->SetTexture(texturePath);
+	MyModel->SetMaterial(material);
 }
 
 void Object::SetTransform(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
@@ -120,7 +120,3 @@ void Object::ScaleMult(glm::vec3 scaleVal)
 	Scale *= scaleVal;
 }
 
-void Object::SetShader(std::shared_ptr<ShaderProgram> shaderProgram)
-{
-	MyModel->SetShaderProgram(shaderProgram);
-}

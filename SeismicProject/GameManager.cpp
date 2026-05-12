@@ -29,42 +29,42 @@ GameManager::GameManager(InputManager* input)
 	obj1->AddChild(mon1);
 	mon1->Translate(glm::vec3(-0.35f, 0.0f, -0.1f));
 	mon1->Rotate(glm::vec3(0.0f, -55.0f, 0.0f));
-	mon1->AttachTexture("resources/images/Image_0.png");
 
 	obj2->AddChild(mon2);
 	mon2->Translate(glm::vec3(-0.35f, 0.0f, -0.1f));
 	mon2->Rotate(glm::vec3(0.0f, -55.0f, 0.0f));
-	mon2->AttachTexture("resources/images/Image_0.png");
 
 	obj3->AddChild(mon3);
 	mon3->Translate(glm::vec3(-0.35f, 0.0f, -0.1f));
 	mon3->Rotate(glm::vec3(0.0f, -55.0f, 0.0f));
-	mon3->AttachTexture("resources/images/Image_0.png");
 
 	obj4->AddChild(mon4);
 	mon4->Translate(glm::vec3(-0.35f, 0.0f, -0.1f));
 	mon4->Rotate(glm::vec3(0.0f, -55.0f, 0.0f));
-	mon4->AttachTexture("resources/images/Image_0.png");
 
 	obj5->AddChild(mon5);
 	mon5->Translate(glm::vec3(-0.35f, 0.0f, -0.1f));
 	mon5->Rotate(glm::vec3(0.0f, -55.0f, 0.0f));
-	mon5->AttachTexture("resources/images/Image_0.png");
 
 	obj6->AddChild(mon6);
 	mon6->Translate(glm::vec3(-0.35f, 0.0f, -0.1f));
 	mon6->Rotate(glm::vec3(0.0f, -55.0f, 0.0f));
-	mon6->AttachTexture("resources/images/Image_0.png");
 
 	std::shared_ptr<Object> floor = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<Object>(this, "Obj5", "resources/models/floor.obj")));
 
 	floor->Translate(glm::vec3(-2.0f, -0.0f, -2.0f));
 	floor->Rotate(glm::vec3(0.0f, 0.0f, 0.0f));
-	std::shared_ptr<ShaderProgram> floorShader = std::make_shared<ShaderProgram>();
-	floorShader->AddShader(std::make_shared<VertexShader>("Vertex.vert"));
-	floorShader->AddShader(std::make_shared<FragmentShader>("Floor.Frag"));
-	floorShader->AttachAndLink();
-	floor->SetShader(floorShader);
+	
+	try
+	{
+		std::shared_ptr<Material> floorMat = std::make_shared<FloorMaterial>();
+		floor->AttachMaterial(floorMat);
+	}
+	catch (DefaultShader::ShaderException &e)
+	{
+		OutputDebugStringA(e.what());
+		OutputDebugStringA("MAJOR\nMAJOR\nMAJOR\nMAJOR\nMAJOR\nMAJORFUCKUP!!!");
+	}
 
 	
 	obj1->Translate(glm::vec3(-2.0f, 0.0f, 0.0f));
