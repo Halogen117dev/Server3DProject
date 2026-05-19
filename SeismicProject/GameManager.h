@@ -3,6 +3,7 @@
 
 #include"Node.h"
 #include"Object.h"
+#include"WorkstationObject.h"
 
 
 #include"InputManager.h"

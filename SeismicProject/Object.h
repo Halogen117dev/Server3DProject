@@ -11,7 +11,6 @@ public:
 	);
 	~Object();
 
-	void Update() override;
 	void CustomUpdate() override;
 
 	void Render(
@@ -45,16 +44,19 @@ public:
 	void Rotate(glm::vec3 rotationVal);
 	void ScaleMult(glm::vec3 scaleVal);
 
-private:
+protected:
 	glm::vec3 Position;
 	glm::vec3 Rotation;
 	glm::vec3 Scale;
 
-private:
+protected:
 	//Each object may have a singular instance of a model.
 	//unique_ptr is used, as only its parent Object may
 	//access its render() method. Or something, I don't 
 	//really know at all.
 	std::unique_ptr<Model> MyModel;
+
+public:
+	void SetMaterial(std::shared_ptr<Material> material);
 };
 

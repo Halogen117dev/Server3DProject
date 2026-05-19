@@ -4,7 +4,7 @@
 #include<nlohmann/json.hpp>
 
 
-CurlHandler::CurlHandler(const char* CurlURL)
+CurlHandler::CurlHandler(const char* curlURL)
 {
 	MyCurl = curl_easy_init();
 
@@ -13,7 +13,7 @@ CurlHandler::CurlHandler(const char* CurlURL)
 		throw 123;
 	}
 
-	CURLcode res = curl_easy_setopt(MyCurl, CURLOPT_URL, CurlURL);
+	CURLcode res = curl_easy_setopt(MyCurl, CURLOPT_URL, curlURL);
 }
 
 CurlHandler::~CurlHandler()
@@ -46,7 +46,7 @@ struct Workstation
 
 std::vector<CurlHandler::WorkstationState> CurlHandler::RequestWorkstations()
 {
-	if (ElapsedTimeSinceRequest > 1000000) //in microseconds
+	if (ElapsedTimeSinceWorkstationRequest > 1000000) //in microseconds
 	{
 
 		std::string readBuffer;
@@ -57,6 +57,8 @@ std::vector<CurlHandler::WorkstationState> CurlHandler::RequestWorkstations()
 
 		CURLcode res;
 		res = curl_easy_perform(MyCurl);
+		if (res != CURLE_OK)
+			throw 213;
 
 		MyWorkstations.clear();
 		nlohmann::json obj = nlohmann::json::parse(readBuffer);
@@ -100,10 +102,10 @@ std::vector<CurlHandler::WorkstationState> CurlHandler::RequestWorkstations()
 
 			MyWorkstations.push_back(w);
 		}
-		ElapsedTimeSinceRequest = 0;
+		ElapsedTimeSinceWorkstationRequest = 0;
 	}
 
-	ElapsedTimeSinceRequest += CurlTimer.DT();
+	ElapsedTimeSinceWorkstationRequest += CurlTimer.DT();
 	return MyWorkstations;
 }
 

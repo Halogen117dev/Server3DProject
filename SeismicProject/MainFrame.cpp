@@ -4,7 +4,7 @@
 MainFrame::MainFrame(const wxString& title)
     : wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxDefaultSize)
 {
-    MyCurlHandler = new CurlHandler("http://192.168.1.102:5001/api/workstations");
+    MyCurlHandler = new CurlHandler("http://192.168.1.100:5001/api/workstations");
 
     wxGLAttributes vAttrs;
     vAttrs.PlatformDefaults().Defaults().Samplers(8).EndList();

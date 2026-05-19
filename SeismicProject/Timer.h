@@ -5,7 +5,11 @@ class Timer
 {
 public:
 	Timer();
+	
+	// Returns time delta in microseconds.
 	int DT();
+
+	// Returns current time since program start in milliseconds.
 	int GetTime();
 
 private:

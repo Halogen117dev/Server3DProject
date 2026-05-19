@@ -10,7 +10,7 @@ Camera::Camera(GameManager* game, float aspectRatio, float fov, float nearPlane,
     FarPlane(farPlane)
 {
     Speed = 0.5f;
-    Sensitivity = 0.5f;
+    Sensitivity = 1.25f;
 
     Position = glm::vec3(0.0f, 1.0f, 4.0f);
     Rotation = glm::vec3(0.0f, -90.0f, 0.0f);

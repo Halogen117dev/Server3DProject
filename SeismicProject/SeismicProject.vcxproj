@@ -175,7 +175,9 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="VertexShader.cpp" />
-    <ClCompile Include="WorkstationMat.cpp" />
+    <ClCompile Include="WorkstationMaterial.cpp" />
+    <ClCompile Include="WorkstationMonitorObject.cpp" />
+    <ClCompile Include="WorkstationObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -203,7 +205,9 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexShader.h" />
-    <ClInclude Include="WorkstationMat.h" />
+    <ClInclude Include="WorkstationMaterial.h" />
+    <ClInclude Include="WorkstationMonitorObject.h" />
+    <ClInclude Include="WorkstationObject.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Default.frag" />
