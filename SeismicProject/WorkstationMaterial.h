@@ -12,7 +12,7 @@ public:
 	// Time is in milliseconds.
 	void UpdateStatus(GLuint serverStatus, GLuint timeMS);
 
-	void SetTexture(const char* texturePath);
+	void SetTexture(const char* texturePath, GLint internalFormat = GL_RGB, GLenum externalFormat = GL_RGB);
 
 private:
 	GLuint

@@ -4,6 +4,7 @@
 #include"Node.h"
 #include"Object.h"
 #include"WorkstationObject.h"
+#include"ServerObject.h"
 
 
 #include"InputManager.h"
@@ -19,13 +20,17 @@ public:
 	~GameManager();
 
 	//
-	void Update(int time, int deltaTime, std::vector<CurlHandler::WorkstationState> workstations);
+	void Update(
+		int time, int deltaTime, 
+		std::vector<CurlHandler::WorkstationState> workstations,
+		std::vector<CurlHandler::ServerState> servers
+	);
 
-	//Returns the vector filled with every single model in the program
-	//Right now, it just returns whatever the actual ModelList vector is
-	//Later, it will have an Object3D list instead of a ModelList, and the
-	//function will iterate through every Object3D to give the ModelList or
-	//some shit bro I don't know to be honest.
+	// Returns the vector filled with every single model in the program
+	// Right now, it just returns whatever the actual ModelList vector is
+	// Later, it will have an Object3D list instead of a ModelList, and the
+	// function will iterate through every Object3D to give the ModelList or
+	// some shit bro I don't know to be honest.
 	//
 	// REDUNDANT COMMENT ABOVE, IGNORE AT ALL COSTS
 	// 
@@ -40,6 +45,7 @@ public:
 	GLuint Time();
 	GLuint DeltaTime();
 	CurlHandler::WorkstationState GetWorkstationState(const char* hostname);
+	CurlHandler::ServerState GetServerState(const char* hostname);
 
 	InputManager* Input;
 private:
@@ -54,5 +60,6 @@ private:
 	GLuint dt, t;
 
 	std::vector<CurlHandler::WorkstationState> Workstations;
+	std::vector<CurlHandler::ServerState> Servers;
 };
 

@@ -63,9 +63,11 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     //SETCURRENT DOES NOT WORK HERE FOR SOME REASON
     //SO IT IS PUT IN ONSIZE() METHOD
     std::vector<CurlHandler::WorkstationState> workstations;
+    std::vector<CurlHandler::ServerState> servers;
     if (ParentCurlHandler)
     {
         workstations = ParentCurlHandler->RequestWorkstations();
+        servers = ParentCurlHandler->RequestServers();
     }
 
     BGColor.r = 0.55f;
@@ -85,7 +87,7 @@ void OGLCanvas::OnPaint(wxPaintEvent& WXUNUSED(event))
     //FIXED THIS SHIT USING IF, SIMPLE AS
     if (MyGame != nullptr)
     {
-        MyGame->Update(t, dt, workstations);
+        MyGame->Update(t, dt, workstations, servers);
         MyGPU->SetBGColor(BGColor);
         MyGPU->Render(MyGame->GetCamera(), MyGame->GetMainNode());
     }

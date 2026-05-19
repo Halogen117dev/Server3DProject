@@ -28,10 +28,10 @@ void WorkstationMaterial::UpdateStatus(GLuint serverStatus, GLuint timeMS)
 	Time = timeMS;
 }
 
-void WorkstationMaterial::SetTexture(const char* texturePath)
+void WorkstationMaterial::SetTexture(const char* texturePath, GLint internalFormat, GLenum externalFormat)
 {
 	Textures.clear();
-	Textures.push_back(std::make_unique<Texture>(texturePath));
+	Textures.push_back(std::make_unique<Texture>(texturePath, internalFormat, externalFormat));
 }
 
 void WorkstationMaterial::ReadyShader()

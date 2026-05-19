@@ -22,20 +22,42 @@ public:
 		bool Status = false;		//FALSE IS OFFLINE/TRUE IS ONLINE
 	};
 
+
+	struct Service
+	{
+		std::string Name;
+		std::string Status;
+	};
+	struct ServerState
+	{
+		float CpuUsage = 0.0f;
+		std::string Model;
+		std::string Name;
+		bool PowerState = false;	//FALSE IS OFF/TRUE IS ON
+		float RamUsage = 0.0f;
+		std::vector<Service> Services;
+
+		bool UnknownStatus = false;
+	};
+
 private:
 	CURL* MyCurl = nullptr;
-	WorkstationState MyWorkstationState;
+	std::string MyURL;
 
 	std::vector<WorkstationState> MyWorkstations;
-	//Timer CurlTimer;
+	std::vector<ServerState> MyServers;
 
 public:
-	Timer CurlTimer;
+	Timer WorkstationTimer, ServerTimer;
 
 	std::vector<WorkstationState> RequestWorkstations();
 	std::vector<WorkstationState> GetWorkstations();
 
+	std::vector<ServerState> RequestServers();
+	std::vector<ServerState> GetServers();
 
-	int ElapsedTimeSinceWorkstationRequest = 0;
+
+	unsigned long ElapsedTimeSinceWorkstationRequest;
+	unsigned long ElapsedTimeSinceServerRequest;
 };
 

@@ -19,20 +19,32 @@ GameManager::GameManager(InputManager* input)
 	std::shared_ptr<Object> obj5 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<WorkstationObject>(this, "ws-5")));
 	std::shared_ptr<Object> obj6 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<WorkstationObject>(this, "ws-6")));
 
-	std::shared_ptr<Object> floor = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<Object>(this, "Obj5", "resources/models/floor.obj")));
+	std::shared_ptr<Object> server1 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<ServerObject>(this, "server-1")));
+	std::shared_ptr<Object> server2 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<ServerObject>(this, "server-2")));
+	std::shared_ptr<Object> server3 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<ServerObject>(this, "server-3")));
+	std::shared_ptr<Object> server4 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<ServerObject>(this, "server-4")));
 
-	floor->Translate(glm::vec3(-2.0f, -0.0f, -2.0f));
-	floor->Rotate(glm::vec3(0.0f, 0.0f, 0.0f));
+	
+
+	std::shared_ptr<Object> floor1 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<Object>(this, "Floor1", "resources/models/floor.obj")));
+	std::shared_ptr<Object> floor2 = std::dynamic_pointer_cast<Object>(MainNode->AddChild(std::make_shared<Object>(this, "Floor2", "resources/models/floor.obj")));
+
+	floor1->Translate(glm::vec3(-2.0f, -0.0f, -2.0f));
+	floor1->Rotate(glm::vec3(0.0f, 0.0f, 0.0f));
+	
+	floor2->Translate(glm::vec3(-2.0f, -0.0f, 5.0f));
+	floor2->Rotate(glm::vec3(0.0f, 180.0f, 0.0f));
 	
 	try
 	{
 		std::shared_ptr<Material> floorMat = std::make_shared<FloorMaterial>();
-		floor->AttachMaterial(floorMat);
+		floor1->AttachMaterial(floorMat);
+		floor2->AttachMaterial(floorMat);
 	}
 	catch (DefaultShader::ShaderException &e)
 	{
 		OutputDebugStringA(e.what());
-		OutputDebugStringA("MAJOR\nMAJOR\nMAJOR\nMAJOR\nMAJOR\nMAJORFUCKUP!!!");
+		OutputDebugStringA("MAJOR\nMAJOR\nMAJOR\nMAJOR\nMAJOR!!!");
 	}
 
 	
@@ -42,6 +54,12 @@ GameManager::GameManager(InputManager* input)
 	obj4->Translate(glm::vec3(-4.0f, 0.0f, -2.0f));
 	obj5->Translate(glm::vec3(-4.0f, 0.0f, -4.0f));
 
+	server1->Transform(glm::vec3(-2.0f, 0.0f,  3.0f), glm::vec3(0.0f, 180.0f, 0.0f), glm::vec3(1.5f));
+	server2->Transform(glm::vec3(-2.0f, 0.15f, 3.0f), glm::vec3(0.0f, 180.0f, 0.0f), glm::vec3(1.5f));
+	server3->Transform(glm::vec3(-2.0f, 0.3f,  3.0f), glm::vec3(0.0f, 180.0f, 0.0f), glm::vec3(1.5f));
+	server4->Transform(glm::vec3(-2.0f, 0.45f, 3.0f), glm::vec3(0.0f, 180.0f, 0.0f), glm::vec3(1.5f));
+
+
 	MainCamera = std::make_shared<Camera>(this);
 }
 
@@ -49,13 +67,18 @@ GameManager::~GameManager()
 {
 }
 
-void GameManager::Update(int time, int deltaTime, std::vector<CurlHandler::WorkstationState> workstations)
+void GameManager::Update(
+	int time, int deltaTime, 
+	std::vector<CurlHandler::WorkstationState> workstations,
+	std::vector<CurlHandler::ServerState> servers
+	)
 {	
 	MainCamera->Update();
 
 	t = time;
 	dt = deltaTime;
 	Workstations = workstations;
+	Servers = servers;
 
 	MainNode->Update();
 }
@@ -121,5 +144,28 @@ CurlHandler::WorkstationState GameManager::GetWorkstationState(const char* hostn
 	w.PowerState = false;
 	w.Status = false;
 	return w;
+}
+
+CurlHandler::ServerState GameManager::GetServerState(const char* hostname)
+{
+	for (int i = 0; i < Servers.size(); i++)
+	{
+		if (Servers[i].Name == hostname)
+		{
+			CurlHandler::ServerState s;
+			s.CpuUsage = Servers[i].CpuUsage;
+			s.Model = Servers[i].Model;
+			s.Name = Servers[i].Name;
+			s.PowerState = Servers[i].PowerState;
+			s.RamUsage = Servers[i].RamUsage;
+			s.Services = Servers[i].Services;
+			return s;
+		}		
+	}
+	CurlHandler::ServerState s;
+	s.Name = "NOT FOUND!";
+	s.Model = "NOT FOUND";
+	s.UnknownStatus = true;
+	return s;
 }
 
