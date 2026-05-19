@@ -17,33 +17,9 @@ Object::~Object()
 {
 }
 
-void Object::Update()
-{
-	CustomUpdate();
-
-	//do update stuff
-	for (int i = 0; i < ChildrenList.size(); i++)
-	{
-		ChildrenList[i]->Update();
-	}
-}
-
 void Object::CustomUpdate()
 {
-	/*GLuint serverStatus;
-	if (!Game->GetWorkstationState(ID.c_str()).PowerState)
-	{
-		serverStatus = 0;
-	}
-	else
-	{
-		if (Game->GetWorkstationState(ID.c_str()).Status)
-			serverStatus = 1;
-		else
-			serverStatus = 2;
-	}
-	MyModel->serverStatus = serverStatus;
-	MyModel->time = Game->Time();*/
+	
 }
 
 void Object::Render(std::shared_ptr<Camera> camera, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
@@ -118,5 +94,10 @@ void Object::Rotate(glm::vec3 rotationVal)
 void Object::ScaleMult(glm::vec3 scaleVal)
 {
 	Scale *= scaleVal;
+}
+
+void Object::SetMaterial(std::shared_ptr<Material> material)
+{
+	MyModel->SetMaterial(material);
 }
 

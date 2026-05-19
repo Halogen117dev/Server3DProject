@@ -7,7 +7,7 @@
 class CurlHandler
 {
 public:
-	CurlHandler(const char* CurlURL);
+	CurlHandler(const char* curlURL);
 	~CurlHandler();
 
 
@@ -36,6 +36,6 @@ public:
 	std::vector<WorkstationState> GetWorkstations();
 
 
-	int ElapsedTimeSinceRequest = 0;
+	int ElapsedTimeSinceWorkstationRequest = 0;
 };
 
